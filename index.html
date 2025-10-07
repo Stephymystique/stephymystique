@@ -1,189 +1,221 @@
-  <!DOCTYPE html>
-  <html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Stephy Mystique | Shop</title>
-    <link rel="stylesheet" href="style.css" />
-  </head>
-  <body>
-    <!-- HEADER -->
-    <header class="header">
-      <div class="logo">
-        <img src="images/logo.png" alt="Stephy Mystique Logo" />
-        <h1>Stephy Mystique</h1>
-      </div>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Stephy Mystique | Shop</title>
+  <link rel="stylesheet" href="style.css" />
+  <style>
+    /* Basic styles for cart & payment popup */
+    .cart-popup, .payment-popup {
+      position: fixed; top: 50%; left: 50%;
+      transform: translate(-50%, -50%);
+      background: white; padding: 20px; border: 2px solid #ccc;
+      z-index: 999; display: none; width: 90%; max-width: 400px;
+    }
+    .cart-popup button, .payment-popup button { margin-top: 10px; }
+  </style>
+</head>
+<body>
+  <!-- HEADER -->
+  <header class="header">
+    <div class="logo">
+      <img src="images/logo.png" alt="Stephy Mystique Logo" />
+      <h1>Stephy Mystique</h1>
+    </div>
+    <nav class="nav-links">
+      <a href="#">Home</a>
+      <a href="#">Shop</a>
+      <a href="#">Contact</a>
+    </nav>
+    <div class="header-search">
+      <input type="text" id="searchInput" placeholder="Search products..." />
+      <span class="search-icon">🔍</span>
+    </div>
+    <div class="cart">🛒 <span class="cart-count">0</span></div>
+  </header>
 
-      <nav class="nav-links">
-        <a href="#">Home</a>
-        <a href="#">Shop</a>
-        <a href="#">Contact</a>
-      </nav>
+  <!-- HERO -->
+  <section class="hero">
+    <h2>Discover Trendy Fashion &amp; Beauty Finds</h2>
+    <p>Shop the latest styles, accessories &amp; glam essentials — all in one place!</p>
+  </section>
 
-      <div class="header-search">
-        <input type="text" id="searchInput" placeholder="Search products..." />
-        <span class="search-icon">🔍</span>
-      </div>
+  <!-- PRODUCT GRID -->
+  <section class="products">
+    <div class="product"><img src="images/product1.jpg" alt=""><h3>Lip Gloss</h3><p>₵25</p><button>Add to Cart</button></div>
+    <div class="product"><img src="images/product2.jpg" alt=""><h3>Lip Mask</h3><p>₵10</p><button>Add to Cart</button></div>
+    <div class="product"><img src="images/product3.jpg" alt=""><h3>Vaseline Lip Therapy</h3><p>₵16</p><button>Add to Cart</button></div>
+    <div class="product"><img src="images/product4.jpg" alt=""><h3>Lip Oil</h3><p>₵25</p><button>Add to Cart</button></div>
+    <div class="product"><img src="images/product5.jpg" alt=""><h3>Petal soap paper</h3><p>₵10</p><button>Add to Cart</button></div>
+    <div class="product"><img src="images/product6.jpg" alt=""><h3>Kiss Beauty Coffee Lip Scrub</h3><p>₵25</p><button>Add to Cart</button></div>
+    <div class="product"><img src="images/product7.jpg" alt=""><h3>Romantic Rain Lip Gloss</h3><p>₵25</p><button>Add to Cart</button></div>
+    <!-- Add remaining products as needed -->
+  </section>
 
-      <div class="cart">🛒 <span class="cart-count">0</span></div>
-    </header>
+  <!-- CART POPUP -->
+  <div id="cartPopup" class="cart-popup">
+    <h3>Your Cart</h3>
+    <div id="cartItems"></div>
+    <p>Total: ₵<span id="cartTotal">0.00</span></p>
+    <button id="checkoutBtn">Checkout</button>
+    <button id="closeCart">Close</button>
+  </div>
 
-    <!-- HERO -->
-    <section class="hero">
-      <h2>Discover Trendy Fashion &amp; Beauty Finds</h2>
-      <p>Shop the latest styles, accessories &amp; glam essentials — all in one place!</p>
-    </section>
+  <!-- PAYMENT POPUP -->
+  <div id="paymentPopup" class="payment-popup">
+    <h3>Payment & Delivery</h3>
+    <form id="paymentForm">
+      <label>Name:</label>
+      <input type="text" name="name" required>
 
-    <!-- PRODUCT GRID -->
-    <section class="products">
-      <!-- First 3 uploaded products -->
-      <div class="product"><img src="images/product1.jpg" alt=""><h3>Lip Gloss</h3><p>₵25</p><button>Add to Cart</button></div>
-      <div class="product"><img src="images/product2.jpg" alt=""><h3>Lip Mask</h3><p>₵10</p><button>Add to Cart</button></div>
-      <div class="product"><img src="images/product3.jpg" alt=""><h3>Vaseline Lip Therapy</h3><p>₵16</p><button>Add to Cart</button></div>
-      <!-- Products 4–20 placeholders for you to edit -->
-      <div class="product"><img src="images/product4.jpg" alt=""><h3>Lip Oil</h3><p>₵25</p><button>Add to Cart</button></div>
-      <div class="product"><img src="images/product5.jpg" alt=""><h3>Petal soap paper</h3><p>₵10</p><button>Add to Cart</button></div>
-      <div class="product"><img src="images/product6.jpg" alt=""><h3>Kiss Beauty Coffee Embellishing lip Scrub</h3><p>₵25</p><button>Add to Cart</button></div>
-      <div class="product"><img src="images/product7.jpg" alt=""><h3>Romantic Rain Lip Gloss</h3><p>₵25p><button>Add to Cart</button></div>
-      <div class="product"><img src="images/product8.jpg" alt=""><h3>Product 8</h3><p>₵0</p><button>Add to Cart</button></div>
-      <div class="product"><img src="images/product9.jpg" alt=""><h3>Product 9</h3><p>₵0</p><button>Add to Cart</button></div>
-      <div class="product"><img src="images/product10.jpg" alt=""><h3>Product 10</h3><p>₵0</p><button>Add to Cart</button></div>
-      <div class="product"><img src="images/product11.jpg" alt=""><h3>Product 11</h3><p>₵0</p><button>Add to Cart</button></div>
-      <div class="product"><img src="images/product12.jpg" alt=""><h3>Product 12</h3><p>₵0</p><button>Add to Cart</button></div>
-      <div class="product"><img src="images/product13.jpg" alt=""><h3>Product 13</h3><p>₵0</p><button>Add to Cart</button></div>
-      <div class="product"><img src="images/product14.jpg" alt=""><h3>Product 14</h3><p>₵0</p><button>Add to Cart</button></div>
-      <div class="product"><img src="images/product15.jpg" alt=""><h3>Product 15</h3><p>₵0</p><button>Add to Cart</button></div>
-      <div class="product"><img src="images/product16.jpg" alt=""><h3>Product 16</h3><p>₵0</p><button>Add to Cart</button></div>
-      <div class="product"><img src="images/product17.jpg" alt=""><h3>Product 17</h3><p>₵0</p><button>Add to Cart</button></div>
-      <div class="product"><img src="images/product18.jpg" alt=""><h3>Product 18</h3><p>₵0</p><button>Add to Cart</button></div>
-      <div class="product"><img src="images/product19.jpg" alt=""><h3>Product 19</h3><p>₵0</p><button>Add to Cart</button></div>
-      <div class="product"><img src="images/product20.jpg" alt=""><h3>Product 20</h3><p>₵0</p><button>Add to Cart</button></div>
-    </section>
+      <label>Email:</label>
+      <input type="email" name="email" required placeholder="customer@example.com">
 
-    <footer class="footer">
-  <p>© 2025 Stephy Mystique | All Rights Reserved</p>
-  <p>Follow us: <a href="#">Facebook</a> | <a href="#">Instagram</a> | <a href="#">Twitter</a></p>
-  <img src="images/ceo.jpg" alt="CEO">
-  <p>CEO: Stephanie Aniagyei</p>
-  <p>Why choose us: Best curated e-commerce experience, quality products & reliable delivery.</p>
+      <label>Delivery Method:</label>
+      <select name="delivery" required>
+        <option value="delivery">Delivery</option>
+        <option value="pickup">Pickup</option>
+      </select>
+
+      <label>Location (if Delivery):</label>
+      <input type="text" name="location">
+
+      <button type="submit">Pay & Confirm</button>
+      <button type="button" id="closePayment">Cancel</button>
+    </form>
+  </div>
+
+  <footer class="footer">
+    <p>© 2025 Stephy Mystique | All Rights Reserved</p>
+    <p>Follow us: <a href="#">Facebook</a> | <a href="#">Instagram</a> | <a href="#">Twitter</a></p>
+    <img src="images/ceo.jpg" alt="CEO">
+    <p>CEO: Stephanie Aniagyei</p>
+    <p>Why choose us: Best curated e-commerce experience, quality products & reliable delivery.</p>
   </footer>
 
+  <!-- PAYSTACK JS -->
+  <script src="https://js.paystack.co/v1/inline.js"></script>
 
-    <!-- CART POPUP OVERLAY -->
-    <div id="cartPopup" class="cart-popup">
-      <h3>Your Cart</h3>
-      <div id="cartItems"></div>
-      <p>Total: ₵<span id="cartTotal">0</span></p>
-      <button id="checkoutBtn">Checkout</button>
-      <button id="closeCart">Close</button>
-    </div>
+  <!-- CART + PAYSTACK SCRIPT -->
+  <script>
+    // --- CART FUNCTIONALITY ---
+    let cart = [];
 
-    
-        
-        <label>Location (if Delivery):</label>
-        <input type="text" name="location">
+    const cartCount = document.querySelector('.cart-count');
+    const cartItemsContainer = document.getElementById('cartItems');
+    const cartTotalElement = document.getElementById('cartTotal');
+    const cartPopup = document.getElementById('cartPopup');
 
-        <p>Select Mobile Money Network:</p>
-        <div class="network-buttons">
-          <button type="button" class="network-btn" data-network="MTN" data-code="*170#">MTN</button>
-          <button type="button" class="network-btn" data-network="AirtelTigo" data-code="*110#">Airtel/Tigo</button>
-          <button type="button" class="network-btn" data-network="Telecel" data-code="*123#">Telecel</button>
-        </div>
+    // Add to Cart buttons
+    document.querySelectorAll('.product button').forEach(btn => {
+      btn.addEventListener('click', () => {
+        const product = btn.parentElement;
+        const name = product.querySelector('h3').innerText;
+        const priceText = product.querySelector('p').innerText.replace('₵','');
+        const price = parseFloat(priceText);
 
-        <button type="submit">Pay & Confirm</button>
-        <button type="button" id="closePayment">Cancel</button>
-      </form>
-    </div>
-<!-- PAYMENT POPUP -->
-<div id="paymentPopup" class="payment-popup" style="display:none;">
-  <h3>Payment & Delivery</h3>
-  <form id="paymentForm">
-    <label>Name:</label>
-    <input type="text" name="name" required>
+        const existing = cart.find(item => item.name === name);
+        if (existing) {
+          existing.qty += 1;
+        } else {
+          cart.push({ name, price, qty: 1 });
+        }
 
-    <label>Email:</label>
-    <input type="email" name="email" required placeholder="customer@example.com">
-
-    <label>Delivery Method:</label>
-    <select name="delivery" required>
-      <option value="delivery">Delivery</option>
-      <option value="pickup">Pickup</option>
-    </select>
-
-    <label>Location (if Delivery):</label>
-    <input type="text" name="location">
-
-    <button type="submit">Pay & Confirm</button>
-    <button type="button" id="closePayment">Cancel</button>
-  </form>
-</div>
-<script src="https://js.paystack.co/v1/inline.js"></script>
-<script>
-  const checkoutBtn = document.getElementById('checkoutBtn');
-  const paymentForm = document.getElementById('paymentForm');
-  const paymentPopup = document.getElementById('paymentPopup');
-
-  // Open payment popup when checkout button is clicked
-  checkoutBtn.addEventListener('click', () => {
-    paymentPopup.style.display = 'block';
-  });
-
-  // Close payment popup
-  document.getElementById('closePayment').addEventListener('click', () => {
-    paymentPopup.style.display = 'none';
-  });
-
-  // Handle Paystack payment on form submit
-  paymentForm.addEventListener('submit', function(e) {
-    e.preventDefault();
-
-    const name = paymentForm.name.value;
-    const email = paymentForm.email.value;
-
-    // Get cart total
-    const totalElement = document.getElementById('cartTotal');
-    let totalAmount = parseFloat(totalElement.textContent);
-    if (isNaN(totalAmount) || totalAmount <= 0) {
-      alert("Your cart is empty!");
-      return;
-    }
-
-    const amountInKobo = totalAmount * 100; // Convert GH¢ to kobo
-
-    let handler = PaystackPop.setup({
-      key: 'pk_live_640af38072f48339462a8937bed12dda2774a34d', // Live key
-      email: email,
-      amount: amountInKobo,
-      currency: 'GHS',
-      ref: 'SM_' + Math.floor(Math.random() * 1000000000 + 1),
-      metadata: {
-        custom_fields: [
-          { display_name: "Customer Name", variable_name: "name", value: name }
-        ]
-      },
-      callback: function(response) {
-        alert('Payment successful! Reference: ' + response.reference);
-        paymentPopup.style.display = 'none';
-        // Optional: clear cart or redirect to success page
-        window.location.href = "success.html";
-      },
-      onClose: function() {
-        alert('Payment was not completed.');
-      }
+        updateCartDisplay();
+      });
     });
 
-    handler.openIframe();
-  });
-</script>
+    // Open cart popup
+    document.querySelector('.cart').addEventListener('click', () => {
+      cartPopup.style.display = 'block';
+    });
 
- 
+    // Close cart popup
+    document.getElementById('closeCart').addEventListener('click', () => {
+      cartPopup.style.display = 'none';
+    });
 
-  
-    
-   
+    // Update cart display
+    function updateCartDisplay() {
+      cartItemsContainer.innerHTML = '';
+      let total = 0;
 
-  </body>
-  </html>
+      cart.forEach((item, index) => {
+        total += item.price * item.qty;
+        const div = document.createElement('div');
+        div.innerHTML = `
+          <span>${item.name} x ${item.qty} - ₵${(item.price * item.qty).toFixed(2)}</span>
+          <button data-index="${index}">Remove</button>
+        `;
+        cartItemsContainer.appendChild(div);
+      });
 
+      cartTotalElement.innerText = total.toFixed(2);
+      cartCount.innerText = cart.reduce((acc, item) => acc + item.qty, 0);
 
+      // Remove items
+      document.querySelectorAll('#cartItems button').forEach(btn => {
+        btn.addEventListener('click', () => {
+          const index = btn.getAttribute('data-index');
+          cart.splice(index, 1);
+          updateCartDisplay();
+        });
+      });
+    }
 
+    // --- PAYMENT POPUP ---
+    const checkoutBtn = document.getElementById('checkoutBtn');
+    const paymentForm = document.getElementById('paymentForm');
+    const paymentPopup = document.getElementById('paymentPopup');
+
+    checkoutBtn.addEventListener('click', () => {
+      if(cart.length === 0) {
+        alert("Your cart is empty!");
+        return;
+      }
+      paymentPopup.style.display = 'block';
+    });
+
+    document.getElementById('closePayment').addEventListener('click', () => {
+      paymentPopup.style.display = 'none';
+    });
+
+    // --- PAYSTACK INTEGRATION ---
+    paymentForm.addEventListener('submit', function(e) {
+      e.preventDefault();
+
+      const name = paymentForm.name.value;
+      const email = paymentForm.email.value;
+
+      let totalAmount = cart.reduce((acc, item) => acc + item.price * item.qty, 0);
+      const amountInKobo = totalAmount * 100;
+
+      let handler = PaystackPop.setup({
+        key: 'pk_live_640af38072f48339462a8937bed12dda2774a34d',
+        email: email,
+        amount: amountInKobo,
+        currency: 'GHS',
+        ref: 'SM_' + Math.floor(Math.random() * 1000000000 + 1),
+        metadata: {
+          custom_fields: [
+            { display_name: "Customer Name", variable_name: "name", value: name }
+          ]
+        },
+        callback: function(response) {
+          alert('Payment successful! Reference: ' + response.reference);
+          paymentPopup.style.display = 'none';
+          cart = [];
+          updateCartDisplay();
+          window.location.href = "success.html"; // redirect
+        },
+        onClose: function() {
+          alert('Payment was not completed.');
+        }
+      });
+
+      handler.openIframe();
+    });
+  </script>
+</body>
+</html>
