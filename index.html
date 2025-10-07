@@ -1,122 +1,166 @@
-  <!DOCTYPE html>
-  <html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Stephy Mystique | Shop</title>
-    <link rel="stylesheet" href="style.css">
-  </head>
-  <body>
-    <!-- HEADER -->
-    <header class="header">
-      <div class="logo">
-        <img src="images/logo.png" alt="Stephy Mystique Logo" />
-        <h1>Stephy Mystique</h1>
-      </div>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Stephy Mystique</title>
 
-      <nav class="nav-links">
-        <a href="#">Home</a>
-        <a href="#">Shop</a>
-        <a href="#">Contact</a>
-      </nav>
+  <style>
+    /* 🌊 Global Styling */
+    body {
+      font-family: 'Poppins', sans-serif;
+      background-color: #b3e0f2; /* sea blue */
+      margin: 0;
+      padding: 0;
+      text-align: center;
+      color: #333;
+    }
 
-      <div class="header-search">
-        <input type="text" id="searchInput" placeholder="Search products..." />
-        <span class="search-icon">🔍</span>
-      </div>
+    header {
+      background-color: #0077b6;
+      color: white;
+      padding: 20px 0;
+      font-size: 24px;
+      font-weight: bold;
+      letter-spacing: 1px;
+    }
 
-      <div class="cart">🛒 <span class="cart-count">0</span></div>
-    </header>
+    /* 🛍️ Product Grid */
+    .products {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+      gap: 25px;
+      padding: 40px;
+    }
 
-    <!-- HERO -->
-    <section class="hero">
-      <h2>Discover Trendy Fashion &amp; Beauty Finds</h2>
-      <p>Shop the latest styles, accessories &amp; glam essentials — all in one place!</p>
-    </section>
+    /* 💎 Product Card */
+    .product {
+      background: #ffffff;
+      border-radius: 20px;
+      box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+      padding: 20px;
+      transition: transform 0.3s ease, box-shadow 0.3s ease;
+    }
 
-    <!-- PRODUCT GRID -->
-    <section class="products">
-      <!-- First 3 uploaded products -->
-      <div class="product"><img src="images/product1.jpg" alt=""><h3>Lip Gloss</h3><p>₵25</p><button>Add to Cart</button></div>
-      <div class="product"><img src="images/product2.jpg" alt=""><h3>Lip Mask</h3><p>₵10</p><button>Add to Cart</button></div>
-      <div class="product"><img src="images/product3.jpg" alt=""><h3>Vaseline Lip Therapy</h3><p>₵16</p><button>Add to Cart</button></div>
-      <!-- Products 4–20 placeholders for you to edit -->
-      <div class="product"><img src="images/product4.jpg" alt=""><h3>Lip Oil</h3><p>₵25</p><button>Add to Cart</button></div>
-      <div class="product"><img src="images/product5.jpg" alt=""><h3>Petal soap paper</h3><p>₵10</p><button>Add to Cart</button></div>
-      <div class="product"><img src="images/product6.jpg" alt=""><h3>Kiss Beauty Coffee Embellishing lip Scrub</h3><p>₵25</p><button>Add to Cart</button></div>
-      <div class="product"><img src="images/product7.jpg" alt=""><h3>Romantic Rain Lip Gloss</h3><p>₵25p><button>Add to Cart</button></div>
-      <div class="product"><img src="images/product8.jpg" alt=""><h3>Product 8</h3><p>₵0</p><button>Add to Cart</button></div>
-      <div class="product"><img src="images/product9.jpg" alt=""><h3>Product 9</h3><p>₵0</p><button>Add to Cart</button></div>
-      <div class="product"><img src="images/product10.jpg" alt=""><h3>Product 10</h3><p>₵0</p><button>Add to Cart</button></div>
-      <div class="product"><img src="images/product11.jpg" alt=""><h3>Product 11</h3><p>₵0</p><button>Add to Cart</button></div>
-      <div class="product"><img src="images/product12.jpg" alt=""><h3>Product 12</h3><p>₵0</p><button>Add to Cart</button></div>
-      <div class="product"><img src="images/product13.jpg" alt=""><h3>Product 13</h3><p>₵0</p><button>Add to Cart</button></div>
-      <div class="product"><img src="images/product14.jpg" alt=""><h3>Product 14</h3><p>₵0</p><button>Add to Cart</button></div>
-      <div class="product"><img src="images/product15.jpg" alt=""><h3>Product 15</h3><p>₵0</p><button>Add to Cart</button></div>
-      <div class="product"><img src="images/product16.jpg" alt=""><h3>Product 16</h3><p>₵0</p><button>Add to Cart</button></div>
-      <div class="product"><img src="images/product17.jpg" alt=""><h3>Product 17</h3><p>₵0</p><button>Add to Cart</button></div>
-      <div class="product"><img src="images/product18.jpg" alt=""><h3>Product 18</h3><p>₵0</p><button>Add to Cart</button></div>
-      <div class="product"><img src="images/product19.jpg" alt=""><h3>Product 19</h3><p>₵0</p><button>Add to Cart</button></div>
-      <div class="product"><img src="images/product20.jpg" alt=""><h3>Product 20</h3><p>₵0</p><button>Add to Cart</button></div>
-    </section>
+    .product:hover {
+      transform: scale(1.05);
+      box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15);
+    }
 
-    <footer class="footer">
-  <p>© 2025 Stephy Mystique | All Rights Reserved</p>
-  <p>Follow us: <a href="#">Facebook</a> | <a href="#">Instagram</a> | <a href="#">Twitter</a></p>
-  <img src="images/ceo.jpg" alt="CEO">
-  <p>CEO: Stephanie Aniagyei</p>
-  <p>Why choose us: Best curated e-commerce experience, quality products & reliable delivery.</p>
+    /* 💋 Product Images */
+    .product img {
+      width: 100%;
+      max-width: 260px;
+      height: auto;
+      border-radius: 15px;
+      margin-bottom: 10px;
+    }
+
+    /* ✨ Product Text */
+    .product h3 {
+      font-size: 18px;
+      margin-bottom: 5px;
+      color: #0077b6;
+    }
+
+    .product p {
+      font-size: 15px;
+      color: #444;
+    }
+
+    /* 💖 Buy Button */
+    button {
+      background-color: #0077b6;
+      color: white;
+      border: none;
+      border-radius: 25px;
+      padding: 8px 16px;
+      cursor: pointer;
+      transition: background-color 0.3s ease;
+    }
+
+    button:hover {
+      background-color: #005f8c;
+    }
+
+    footer {
+      background-color: #0077b6;
+      color: white;
+      padding: 15px 0;
+      margin-top: 40px;
+      font-size: 14px;
+    }
+  </style>
+</head>
+<body>
+
+  <header>
+    Stephy Mystique 💋
+  </header>
+
+  <section class="products">
+    <div class="product">
+      <img src="images/lipgloss.jpg" alt="Lip Gloss">
+      <h3>Lip Gloss</h3>
+      <p>GH₵35.00</p>
+      <button onclick="payWithPaystack('Lip Gloss', 35)">Buy Now</button>
+    </div>
+
+    <div class="product">
+      <img src="images/lipscrub.jpg" alt="Lip Scrub">
+      <h3>Lip Scrub</h3>
+      <p>GH₵45.00</p>
+      <button onclick="payWithPaystack('Lip Scrub', 45)">Buy Now</button>
+    </div>
+
+    <div class="product">
+      <img src="images/lipbalm.jpg" alt="Lip Balm">
+      <h3>Lip Balm</h3>
+      <p>GH₵55.00</p>
+      <button onclick="payWithPaystack('Lip Balm', 55)">Buy Now</button>
+    </div>
+
+    <div class="product">
+      <img src="images/lipmask.jpg" alt="Lip Mask">
+      <h3>Lip Mask</h3>
+      <p>GH₵45.00</p>
+      <button onclick="payWithPaystack('Lip Mask', 45)">Buy Now</button>
+    </div>
+  </section>
+
+  <footer>
+    © 2025 Stephy Mystique | Designed by Ileona Aniagyei 💙
   </footer>
 
+  <!-- 💳 Paystack Integration -->
+  <script src="https://js.paystack.co/v1/inline.js"></script>
+  <script>
+    function payWithPaystack(product, amount){
+      let handler = PaystackPop.setup({
+        key: 'pk_test_69bb25e8c7bb50617ece7cf4fbd0c442d5217485', // your test key
+        email: 'customer@email.com',
+        amount: amount * 100, // in pesewas
+        currency: 'GHS',
+        ref: ''+Math.floor((Math.random() * 1000000000) + 1),
+        metadata: {
+          custom_fields: [
+            {
+              display_name: "Product",
+              variable_name: "product",
+              value: product
+            }
+          ]
+        },
+        callback: function(response){
+          alert('✅ Payment successful! Reference: ' + response.reference);
+        },
+        onClose: function(){
+          alert('Payment window closed ❌');
+        }
+      });
+      handler.openIframe();
+    }
+  </script>
 
-    <!-- CART POPUP OVERLAY -->
-    <div id="cartPopup" class="cart-popup">
-      <h3>Your Cart</h3>
-      <div id="cartItems"></div>
-      <p>Total: ₵<span id="cartTotal">0</span></p>
-      <button id="checkoutBtn">Checkout</button>
-      <button id="closeCart">Close</button>
-    </div>
-
-    <!-- PAYMENT POPUP -->
-    <div id="paymentPopup" class="payment-popup">
-      <h3>Payment & Delivery</h3>
-      <form id="paymentForm">
-        <label>Name:</label>
-        <input type="text" name="name" required>
-        
-        <label>Delivery Method:</label>
-        <select name="delivery" required>
-          <option value="delivery">Delivery</option>
-          <option value="pickup">Pickup</option>
-        </select>
-        
-        <label>Location (if Delivery):</label>
-        <input type="text" name="location">
-
-        <p>Select Mobile Money Network:</p>
-        <div class="network-buttons">
-          <button type="button" class="network-btn" data-network="MTN" data-code="*170#">MTN</button>
-          <button type="button" class="network-btn" data-network="AirtelTigo" data-code="*110#">Airtel/Tigo</button>
-          <button type="button" class="network-btn" data-network="Telecel" data-code="*123#">Telecel</button>
-        </div>
-
-        <button type="submit">Pay & Confirm</button>
-        <button type="button" id="closePayment">Cancel</button>
-      </form>
-    </div>
-
-    <!-- NETWORK POPUP -->
-    <div id="networkPopup" class="network-popup">
-      <h4 id="networkTitle"></h4>
-      <p>Send payment to: <strong>+233553314773</strong></p>
-      <label>Amount (₵):</label>
-      <input type="number" id="networkAmount" min="1">
-      <button id="networkConfirm">Confirm</button>
-      <button id="networkClose">Cancel</button>
-    </div>
-
-    <script src="script.js"></script>
-  </body>
-  </html>
-
+</body>
+</html>
