@@ -72,6 +72,15 @@
     <h3>Your Cart</h3>
     <div id="cartItems"></div>
     <p>Total: ₵<span id="cartTotal">0.00</span></p>
+
+    <!-- Delivery Details -->
+    <div id="deliveryDetails">
+      <h4>Delivery Details</h4>
+      <input type="text" id="customerName" placeholder="Full Name" style="width:100%; margin-bottom:5px;" />
+      <input type="text" id="customerPhone" placeholder="Phone Number" style="width:100%; margin-bottom:5px;" />
+      <textarea id="customerAddress" placeholder="Delivery Address" style="width:100%; margin-bottom:5px;"></textarea>
+    </div>
+
     <button id="checkoutBtn">Checkout</button>
     <button id="closeCart">Close</button>
   </div>
@@ -138,4 +147,67 @@
 
       // Buttons
       document.querySelectorAll('.increase').forEach(btn=>{
-        btn.onclick = ()=>{ cart[btn.dataset.index].qty +=1; updateCart
+        btn.onclick = ()=>{ cart[btn.dataset.index].qty +=1; updateCartDisplay(); }
+      });
+      document.querySelectorAll('.decrease').forEach(btn=>{
+        btn.onclick = ()=>{
+          const i = btn.dataset.index;
+          if(cart[i].qty>1) cart[i].qty -=1;
+          else cart.splice(i,1);
+          updateCartDisplay();
+        }
+      });
+      document.querySelectorAll('.remove').forEach(btn=>{
+        btn.onclick = ()=>{ cart.splice(btn.dataset.index,1); updateCartDisplay(); }
+      });
+    }
+
+    // Checkout → Paystack
+    document.getElementById('checkoutBtn').addEventListener('click', ()=>{
+      if(cart.length===0){ alert("Your cart is empty!"); return; }
+
+      // Get delivery info
+      const name = document.getElementById('customerName').value.trim();
+      const phone = document.getElementById('customerPhone').value.trim();
+      const address = document.getElementById('customerAddress').value.trim();
+
+      if(!name || !phone || !address){
+        alert("Please fill in all delivery details before checkout.");
+        return;
+      }
+
+      const totalAmount = cart.reduce((acc,item)=>acc+item.price*item.qty,0);
+      const amountInKobo = totalAmount*100;
+
+      let handler = PaystackPop.setup({
+        key: 'pk_live_640af38072f48339462a8937bed12dda2774a34d',
+        email: prompt("Enter your email for payment:"),
+        amount: amountInKobo,
+        currency: 'GHS',
+        ref: 'SM_' + Math.floor(Math.random()*1000000000+1),
+        metadata: {
+          custom_fields: [
+            { display_name: "Customer Name", value: name },
+            { display_name: "Phone Number", value: phone },
+            { display_name: "Delivery Address", value: address }
+          ]
+        },
+        callback: function(response){
+          alert('Payment successful! Reference: '+response.reference);
+          cart=[];
+          updateCartDisplay();
+          cartPopup.style.display='none';
+
+          // Clear delivery fields
+          document.getElementById('customerName').value = '';
+          document.getElementById('customerPhone').value = '';
+          document.getElementById('customerAddress').value = '';
+        },
+        onClose: function(){ alert('Payment not completed.'); }
+      });
+
+      handler.openIframe();
+    });
+  </script>
+</body>
+</html>
