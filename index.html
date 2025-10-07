@@ -6,14 +6,14 @@
   <title>Stephy Mystique | Shop</title>
   <link rel="stylesheet" href="style.css" />
   <style>
-    /* Basic styles for cart & payment popup */
-    .cart-popup, .payment-popup {
+    .cart-popup {
       position: fixed; top: 50%; left: 50%;
       transform: translate(-50%, -50%);
       background: white; padding: 20px; border: 2px solid #ccc;
       z-index: 999; display: none; width: 90%; max-width: 400px;
     }
-    .cart-popup button, .payment-popup button { margin-top: 10px; }
+    .cart-popup button { margin: 5px 5px 0 0; }
+    .cart-popup div span { display: inline-block; min-width: 120px; }
   </style>
 </head>
 <body>
@@ -47,10 +47,10 @@
     <div class="product"><img src="images/product2.jpg" alt=""><h3>Lip Mask</h3><p>₵10</p><button>Add to Cart</button></div>
     <div class="product"><img src="images/product3.jpg" alt=""><h3>Vaseline Lip Therapy</h3><p>₵16</p><button>Add to Cart</button></div>
     <div class="product"><img src="images/product4.jpg" alt=""><h3>Lip Oil</h3><p>₵25</p><button>Add to Cart</button></div>
-    <div class="product"><img src="images/product5.jpg" alt=""><h3>Petal soap paper</h3><p>₵10</p><button>Add to Cart</button></div>
+    <div class="product"><img src="images/product5.jpg" alt=""><h3>Petal Soap Paper</h3><p>₵10</p><button>Add to Cart</button></div>
     <div class="product"><img src="images/product6.jpg" alt=""><h3>Kiss Beauty Coffee Lip Scrub</h3><p>₵25</p><button>Add to Cart</button></div>
     <div class="product"><img src="images/product7.jpg" alt=""><h3>Romantic Rain Lip Gloss</h3><p>₵25</p><button>Add to Cart</button></div>
-    <!-- Add remaining products as needed -->
+    <!-- ... Add products 8–20 similarly ... -->
   </section>
 
   <!-- CART POPUP -->
@@ -60,30 +60,6 @@
     <p>Total: ₵<span id="cartTotal">0.00</span></p>
     <button id="checkoutBtn">Checkout</button>
     <button id="closeCart">Close</button>
-  </div>
-
-  <!-- PAYMENT POPUP -->
-  <div id="paymentPopup" class="payment-popup">
-    <h3>Payment & Delivery</h3>
-    <form id="paymentForm">
-      <label>Name:</label>
-      <input type="text" name="name" required>
-
-      <label>Email:</label>
-      <input type="email" name="email" required placeholder="customer@example.com">
-
-      <label>Delivery Method:</label>
-      <select name="delivery" required>
-        <option value="delivery">Delivery</option>
-        <option value="pickup">Pickup</option>
-      </select>
-
-      <label>Location (if Delivery):</label>
-      <input type="text" name="location">
-
-      <button type="submit">Pay & Confirm</button>
-      <button type="button" id="closePayment">Cancel</button>
-    </form>
   </div>
 
   <footer class="footer">
@@ -97,11 +73,8 @@
   <!-- PAYSTACK JS -->
   <script src="https://js.paystack.co/v1/inline.js"></script>
 
-  <!-- CART + PAYSTACK SCRIPT -->
   <script>
-    // --- CART FUNCTIONALITY ---
     let cart = [];
-
     const cartCount = document.querySelector('.cart-count');
     const cartItemsContainer = document.getElementById('cartItems');
     const cartTotalElement = document.getElementById('cartTotal');
@@ -112,106 +85,79 @@
       btn.addEventListener('click', () => {
         const product = btn.parentElement;
         const name = product.querySelector('h3').innerText;
-        const priceText = product.querySelector('p').innerText.replace('₵','');
+        const priceText = product.querySelector('p').innerText.replace(/[^0-9.]/g,'');
         const price = parseFloat(priceText);
 
         const existing = cart.find(item => item.name === name);
-        if (existing) {
-          existing.qty += 1;
-        } else {
-          cart.push({ name, price, qty: 1 });
-        }
+        if(existing) existing.qty += 1;
+        else cart.push({ name, price, qty:1 });
 
         updateCartDisplay();
       });
     });
 
-    // Open cart popup
-    document.querySelector('.cart').addEventListener('click', () => {
-      cartPopup.style.display = 'block';
-    });
+    // Open/Close cart
+    document.querySelector('.cart').addEventListener('click', ()=>cartPopup.style.display='block');
+    document.getElementById('closeCart').addEventListener('click', ()=>cartPopup.style.display='none');
 
-    // Close cart popup
-    document.getElementById('closeCart').addEventListener('click', () => {
-      cartPopup.style.display = 'none';
-    });
-
-    // Update cart display
-    function updateCartDisplay() {
+    function updateCartDisplay(){
       cartItemsContainer.innerHTML = '';
       let total = 0;
 
-      cart.forEach((item, index) => {
-        total += item.price * item.qty;
+      cart.forEach((item,index)=>{
+        total += item.price*item.qty;
         const div = document.createElement('div');
         div.innerHTML = `
-          <span>${item.name} x ${item.qty} - ₵${(item.price * item.qty).toFixed(2)}</span>
-          <button data-index="${index}">Remove</button>
+          <span>${item.name} - ₵${item.price.toFixed(2)}</span>
+          <div>
+            <button class="decrease" data-index="${index}">-</button>
+            <span>${item.qty}</span>
+            <button class="increase" data-index="${index}">+</button>
+            <button class="remove" data-index="${index}">Remove</button>
+          </div>
         `;
         cartItemsContainer.appendChild(div);
       });
 
       cartTotalElement.innerText = total.toFixed(2);
-      cartCount.innerText = cart.reduce((acc, item) => acc + item.qty, 0);
+      cartCount.innerText = cart.reduce((acc,item)=>acc+item.qty,0);
 
-      // Remove items
-      document.querySelectorAll('#cartItems button').forEach(btn => {
-        btn.addEventListener('click', () => {
-          const index = btn.getAttribute('data-index');
-          cart.splice(index, 1);
+      // Buttons
+      document.querySelectorAll('.increase').forEach(btn=>{
+        btn.onclick = ()=>{ cart[btn.dataset.index].qty +=1; updateCartDisplay(); }
+      });
+      document.querySelectorAll('.decrease').forEach(btn=>{
+        btn.onclick = ()=>{
+          const i = btn.dataset.index;
+          if(cart[i].qty>1) cart[i].qty -=1;
+          else cart.splice(i,1);
           updateCartDisplay();
-        });
+        }
+      });
+      document.querySelectorAll('.remove').forEach(btn=>{
+        btn.onclick = ()=>{ cart.splice(btn.dataset.index,1); updateCartDisplay(); }
       });
     }
 
-    // --- PAYMENT POPUP ---
-    const checkoutBtn = document.getElementById('checkoutBtn');
-    const paymentForm = document.getElementById('paymentForm');
-    const paymentPopup = document.getElementById('paymentPopup');
-
-    checkoutBtn.addEventListener('click', () => {
-      if(cart.length === 0) {
-        alert("Your cart is empty!");
-        return;
-      }
-      paymentPopup.style.display = 'block';
-    });
-
-    document.getElementById('closePayment').addEventListener('click', () => {
-      paymentPopup.style.display = 'none';
-    });
-
-    // --- PAYSTACK INTEGRATION ---
-    paymentForm.addEventListener('submit', function(e) {
-      e.preventDefault();
-
-      const name = paymentForm.name.value;
-      const email = paymentForm.email.value;
-
-      let totalAmount = cart.reduce((acc, item) => acc + item.price * item.qty, 0);
-      const amountInKobo = totalAmount * 100;
+    // Checkout → Paystack
+    document.getElementById('checkoutBtn').addEventListener('click', ()=>{
+      if(cart.length===0){ alert("Your cart is empty!"); return; }
+      const totalAmount = cart.reduce((acc,item)=>acc+item.price*item.qty,0);
+      const amountInKobo = totalAmount*100;
 
       let handler = PaystackPop.setup({
         key: 'pk_live_640af38072f48339462a8937bed12dda2774a34d',
-        email: email,
+        email: prompt("Enter your email for payment:"),
         amount: amountInKobo,
         currency: 'GHS',
-        ref: 'SM_' + Math.floor(Math.random() * 1000000000 + 1),
-        metadata: {
-          custom_fields: [
-            { display_name: "Customer Name", variable_name: "name", value: name }
-          ]
-        },
-        callback: function(response) {
-          alert('Payment successful! Reference: ' + response.reference);
-          paymentPopup.style.display = 'none';
-          cart = [];
+        ref: 'SM_' + Math.floor(Math.random()*1000000000+1),
+        callback: function(response){
+          alert('Payment successful! Reference: '+response.reference);
+          cart=[];
           updateCartDisplay();
-          window.location.href = "success.html"; // redirect
+          cartPopup.style.display='none';
         },
-        onClose: function() {
-          alert('Payment was not completed.');
-        }
+        onClose: function(){ alert('Payment not completed.'); }
       });
 
       handler.openIframe();
