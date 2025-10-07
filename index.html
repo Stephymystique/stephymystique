@@ -16,6 +16,8 @@
     .cart-popup div span { display: inline-block; min-width: 120px; }
     .product { display:inline-block; margin:10px; text-align:center; }
     .product img { width:150px; height:150px; object-fit:cover; }
+    #orderSummary { display:none; margin-top:10px; border-top:1px solid #ccc; padding-top:10px; }
+    #orderSummary pre { white-space: pre-wrap; word-wrap: break-word; }
   </style>
 </head>
 <body>
@@ -45,6 +47,7 @@
 
   <!-- PRODUCT GRID -->
   <section class="products">
+    <!-- 20 products -->
     <div class="product"><img src="images/product1.jpg" alt=""><h3>Lip Gloss</h3><p>₵25</p><button>Add to Cart</button></div>
     <div class="product"><img src="images/product2.jpg" alt=""><h3>Lip Mask</h3><p>₵10</p><button>Add to Cart</button></div>
     <div class="product"><img src="images/product3.jpg" alt=""><h3>Vaseline Lip Therapy</h3><p>₵16</p><button>Add to Cart</button></div>
@@ -83,6 +86,13 @@
 
     <button id="checkoutBtn">Checkout</button>
     <button id="closeCart">Close</button>
+
+    <!-- ORDER SUMMARY -->
+    <div id="orderSummary">
+      <h4>Order Summary</h4>
+      <pre id="orderSummaryText"></pre>
+      <button id="confirmPaymentBtn">OK</button>
+    </div>
   </div>
 
   <footer class="footer">
@@ -102,6 +112,9 @@
     const cartItemsContainer = document.getElementById('cartItems');
     const cartTotalElement = document.getElementById('cartTotal');
     const cartPopup = document.getElementById('cartPopup');
+    const orderSummaryDiv = document.getElementById('orderSummary');
+    const orderSummaryText = document.getElementById('orderSummaryText');
+    const confirmPaymentBtn = document.getElementById('confirmPaymentBtn');
 
     // Add to Cart buttons
     document.querySelectorAll('.product button').forEach(btn => {
@@ -121,7 +134,10 @@
 
     // Open/Close cart
     document.querySelector('.cart').addEventListener('click', ()=>cartPopup.style.display='block');
-    document.getElementById('closeCart').addEventListener('click', ()=>cartPopup.style.display='none');
+    document.getElementById('closeCart').addEventListener('click', ()=>{
+      cartPopup.style.display='none';
+      orderSummaryDiv.style.display='none';
+    });
 
     function updateCartDisplay(){
       cartItemsContainer.innerHTML = '';
@@ -162,26 +178,32 @@
       });
     }
 
-    // Checkout button with Paystack integration
+    // Checkout → show order summary
     document.getElementById('checkoutBtn').addEventListener('click', () => {
       const name = document.getElementById('customerName').value.trim();
       const phone = document.getElementById('customerPhone').value.trim();
       const address = document.getElementById('customerAddress').value.trim();
 
-      if (!name || !phone || !address) {
-        alert("Please fill in all delivery details!");
-        return;
-      }
+      if (!name || !phone || !address) { alert("Please fill in all delivery details!"); return; }
+      if (cart.length === 0) { alert("Your cart is empty!"); return; }
 
-      if (cart.length === 0) {
-        alert("Your cart is empty!");
-        return;
-      }
+      let summary = "";
+      cart.forEach(item => { summary += `${item.name} x${item.qty} = ₵${(item.price*item.qty).toFixed(2)}\n`; });
+      const total = cart.reduce((acc,item)=>acc+item.price*item.qty,0);
+      summary += `\nTotal: ₵${total.toFixed(2)}\n`;
+      summary += `\nDelivery Details:\nName: ${name}\nPhone: ${phone}\nAddress: ${address}`;
 
-      // Calculate total amount in kobo
+      orderSummaryText.textContent = summary;
+      orderSummaryDiv.style.display = 'block';
+    });
+
+    // Confirm payment → trigger Paystack
+    confirmPaymentBtn.addEventListener('click', () => {
+      const name = document.getElementById('customerName').value.trim();
+      const phone = document.getElementById('customerPhone').value.trim();
+      const address = document.getElementById('customerAddress').value.trim();
       const totalAmount = cart.reduce((acc, item) => acc + item.price * item.qty, 0) * 100;
 
-      // Prepare metadata for Paystack (delivery info + order items)
       const metadata = {
         custom_fields: [
           { display_name: "Customer Name", value: name },
@@ -191,11 +213,10 @@
         ]
       };
 
-      // Initialize Paystack
       const handler = PaystackPop.setup({
-        key: 'pk_live_640af38072f48339462a8937bed12dda2774a34d', // Your live public key
-        email: 'customer@example.com', // Replace with dynamic email if available
-        amount: totalAmount, // in kobo
+        key: 'pk_live_640af38072f48339462a8937bed12dda2774a34d',
+        email: 'customer@example.com',
+        amount: totalAmount,
         currency: 'GHS',
         ref: 'SM-' + Math.floor(Math.random() * 1000000000 + 1),
         metadata: metadata,
@@ -204,10 +225,9 @@
           cart = [];
           updateCartDisplay();
           cartPopup.style.display = 'none';
+          orderSummaryDiv.style.display = 'none';
         },
-        onClose: function() {
-          alert('Payment window closed.');
-        }
+        onClose: function() { alert('Payment window closed.'); }
       });
 
       handler.openIframe();
