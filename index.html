@@ -94,8 +94,7 @@
         <button type="button" id="closePayment">Cancel</button>
       </form>
     </div>
-
-  <!-- PAYMENT POPUP -->
+<!-- PAYMENT POPUP -->
 <div id="paymentPopup" class="payment-popup" style="display:none;">
   <h3>Payment & Delivery</h3>
   <form id="paymentForm">
@@ -114,17 +113,11 @@
     <label>Location (if Delivery):</label>
     <input type="text" name="location">
 
-    <p>Select Mobile Money Network (optional):</p>
-    <div class="network-buttons">
-      <button type="button" class="network-btn" data-network="MTN" data-code="*170#">MTN</button>
-      <button type="button" class="network-btn" data-network="AirtelTigo" data-code="*110#">Airtel/Tigo</button>
-      <button type="button" class="network-btn" data-network="Telecel" data-code="*123#">Telecel</button>
-    </div>
-
     <button type="submit">Pay & Confirm</button>
     <button type="button" id="closePayment">Cancel</button>
   </form>
 </div>
+<script src="https://js.paystack.co/v1/inline.js"></script>
 <script>
   const checkoutBtn = document.getElementById('checkoutBtn');
   const paymentForm = document.getElementById('paymentForm');
@@ -147,9 +140,9 @@
     const name = paymentForm.name.value;
     const email = paymentForm.email.value;
 
-    // Get the total directly from your cart popup
-    const cartTotalElement = document.getElementById('cartTotal');
-    let totalAmount = parseFloat(cartTotalElement.textContent);
+    // Get cart total
+    const totalElement = document.getElementById('cartTotal');
+    let totalAmount = parseFloat(totalElement.textContent);
     if (isNaN(totalAmount) || totalAmount <= 0) {
       alert("Your cart is empty!");
       return;
@@ -183,10 +176,14 @@
   });
 </script>
 
+ 
+
+  
     
    
 
   </body>
   </html>
+
 
 
