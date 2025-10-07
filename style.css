@@ -9,6 +9,8 @@
 body {
   background-color: #e0f7fa; /* Sea blue */
   color: #000;
+  font-size: 16px; /* standardized readable size */
+  line-height: 1.6;
 }
 
 /* HEADER */
@@ -33,6 +35,7 @@ body {
   color: #fff;
   margin: 0 10px;
   text-decoration: none;
+  font-size: 16px; /* adjusted header font */
 }
 
 .header .header-search {
@@ -63,12 +66,12 @@ body {
 }
 
 .hero h2 {
-  font-size: 2rem;
+  font-size: 28px;
   color: #007c91;
 }
 
 .hero p {
-  font-size: 1rem;
+  font-size: 18px;
   margin-top: 10px;
 }
 
@@ -94,29 +97,33 @@ body {
 
 .product img {
   width: 100%;
+  max-width: 250px; /* increased size */
   height: auto;
   border-radius: 10px;
+  margin-bottom: 10px;
 }
 
 .product h3 {
   margin: 10px 0 5px;
-  font-size: 1rem;
+  font-size: 18px; /* slightly bigger */
   color: #007c91;
 }
 
 .product p {
   color: #007c91;
   font-weight: bold;
+  font-size: 16px;
 }
 
 .product button {
   margin-top: 5px;
-  padding: 5px 10px;
+  padding: 8px 12px;
   border: none;
   background-color: #00acc1;
   color: #fff;
   border-radius: 5px;
   cursor: pointer;
+  font-size: 16px;
 }
 
 .product button:hover {
@@ -129,6 +136,11 @@ body {
   color: #fff;
   text-align: center;
   padding: 20px 10px;
+  font-size: 16px;
+}
+
+.footer a {
+  font-size: 16px;
 }
 
 /* CART POPUP */
@@ -147,6 +159,7 @@ body {
   box-shadow: 0 5px 15px rgba(0,0,0,0.3);
   z-index: 200;
   animation: fadeIn 0.3s ease-in-out;
+  font-size: 16px; /* adjusted cart font */
 }
 
 .cart-popup h3 {
@@ -180,6 +193,7 @@ body {
   border: none;
   border-radius: 5px;
   cursor: pointer;
+  font-size: 16px;
 }
 
 #checkoutBtn {
@@ -215,6 +229,7 @@ body {
   z-index: 300;
   box-shadow: 0 5px 20px rgba(0,0,0,0.4);
   animation: slideDown 0.3s ease-in-out;
+  font-size: 16px; /* adjusted font */
 }
 
 .payment-popup h3, .network-popup h3 {
@@ -238,6 +253,7 @@ body {
   border-radius: 5px;
   margin-top: 5px;
   cursor: pointer;
+  font-size: 16px;
 }
 
 .payment-popup form button {
@@ -279,7 +295,27 @@ body {
   }
 
   .products {
-    grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
+    grid-template-columns: repeat(auto-fit, minmax(140px, 1fr)); /* slightly bigger for tablets */
     gap: 10px;
   }
+  
+  .hero h2 { font-size: 22px; }
+  .hero p { font-size: 16px; }
+  
+  .product h3 { font-size: 16px; }
+  .product p { font-size: 14px; }
+  .product button { font-size: 14px; padding: 6px 10px; }
+}
+
+@media (max-width: 480px) {
+  .products {
+    grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
+  }
+  
+  .hero h2 { font-size: 20px; }
+  .hero p { font-size: 14px; }
+  
+  .product h3 { font-size: 14px; }
+  .product p { font-size: 14px; }
+  .product button { font-size: 12px; padding: 5px 8px; }
 }
