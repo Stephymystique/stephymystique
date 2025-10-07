@@ -14,6 +14,8 @@
     }
     .cart-popup button { margin: 5px 5px 0 0; }
     .cart-popup div span { display: inline-block; min-width: 120px; }
+    .product { display:inline-block; margin:10px; text-align:center; }
+    .product img { width:150px; height:150px; object-fit:cover; }
   </style>
 </head>
 <body>
@@ -50,19 +52,19 @@
     <div class="product"><img src="images/product5.jpg" alt=""><h3>Petal Soap Paper</h3><p>₵10</p><button>Add to Cart</button></div>
     <div class="product"><img src="images/product6.jpg" alt=""><h3>Kiss Beauty Coffee Lip Scrub</h3><p>₵25</p><button>Add to Cart</button></div>
     <div class="product"><img src="images/product7.jpg" alt=""><h3>Romantic Rain Lip Gloss</h3><p>₵25</p><button>Add to Cart</button></div>
-    <div class="product"><img src="images/product8.jpg" alt=""><h3>Shea Butter Lip Balm</h3><p>₵15</p><button>Add to Cart</button></div>
-    <div class="product"><img src="images/product9.jpg" alt=""><h3>Rose Lip Scrub</h3><p>₵20</p><button>Add to Cart</button></div>
-    <div class="product"><img src="images/product10.jpg" alt=""><h3>Vanilla Lip Gloss</h3><p>₵18</p><button>Add to Cart</button></div>
-    <div class="product"><img src="images/product11.jpg" alt=""><h3>Coconut Lip Scrub</h3><p>₵22</p><button>Add to Cart</button></div>
-    <div class="product"><img src="images/product12.jpg" alt=""><h3>Cherry Lip Gloss</h3><p>₵20</p><button>Add to Cart</button></div>
-    <div class="product"><img src="images/product13.jpg" alt=""><h3>Mint Lip Balm</h3><p>₵15</p><button>Add to Cart</button></div>
-    <div class="product"><img src="images/product14.jpg" alt=""><h3>Chocolate Lip Scrub</h3><p>₵25</p><button>Add to Cart</button></div>
-    <div class="product"><img src="images/product15.jpg" alt=""><h3>Glossy Lip Oil</h3><p>₵28</p><button>Add to Cart</button></div>
-    <div class="product"><img src="images/product16.jpg" alt=""><h3>Hydrating Lip Mask</h3><p>₵30</p><button>Add to Cart</button></div>
-    <div class="product"><img src="images/product17.jpg" alt=""><h3>Strawberry Lip Balm</h3><p>₵15</p><button>Add to Cart</button></div>
-    <div class="product"><img src="images/product18.jpg" alt=""><h3>Peach Lip Gloss</h3><p>₵22</p><button>Add to Cart</button></div>
-    <div class="product"><img src="images/product19.jpg" alt=""><h3>Honey Lip Scrub</h3><p>₵20</p><button>Add to Cart</button></div>
-    <div class="product"><img src="images/product20.jpg" alt=""><h3>Glow Lip Oil</h3><p>₵25</p><button>Add to Cart</button></div>
+    <div class="product"><img src="images/product8.jpg" alt=""><h3>Sheer Matte Lipstick</h3><p>₵30</p><button>Add to Cart</button></div>
+    <div class="product"><img src="images/product9.jpg" alt=""><h3>Tinted Lip Balm</h3><p>₵15</p><button>Add to Cart</button></div>
+    <div class="product"><img src="images/product10.jpg" alt=""><h3>Hydrating Lip Serum</h3><p>₵28</p><button>Add to Cart</button></div>
+    <div class="product"><img src="images/product11.jpg" alt=""><h3>Glossy Lip Topcoat</h3><p>₵22</p><button>Add to Cart</button></div>
+    <div class="product"><img src="images/product12.jpg" alt=""><h3>Exfoliating Lip Mask</h3><p>₵18</p><button>Add to Cart</button></div>
+    <div class="product"><img src="images/product13.jpg" alt=""><h3>Rose Lip Butter</h3><p>₵20</p><button>Add to Cart</button></div>
+    <div class="product"><img src="images/product14.jpg" alt=""><h3>Cocoa Lip Balm</h3><p>₵15</p><button>Add to Cart</button></div>
+    <div class="product"><img src="images/product15.jpg" alt=""><h3>Lip Plumper</h3><p>₵35</p><button>Add to Cart</button></div>
+    <div class="product"><img src="images/product16.jpg" alt=""><h3>Nourishing Lip Oil</h3><p>₵27</p><button>Add to Cart</button></div>
+    <div class="product"><img src="images/product17.jpg" alt=""><h3>Cherry Lip Scrub</h3><p>₵25</p><button>Add to Cart</button></div>
+    <div class="product"><img src="images/product18.jpg" alt=""><h3>Glossy Lip Stain</h3><p>₵23</p><button>Add to Cart</button></div>
+    <div class="product"><img src="images/product19.jpg" alt=""><h3>Vanilla Lip Therapy</h3><p>₵19</p><button>Add to Cart</button></div>
+    <div class="product"><img src="images/product20.jpg" alt=""><h3>Berry Lip Gloss</h3><p>₵26</p><button>Add to Cart</button></div>
   </section>
 
   <!-- CART POPUP -->
@@ -136,44 +138,4 @@
 
       // Buttons
       document.querySelectorAll('.increase').forEach(btn=>{
-        btn.onclick = ()=>{ cart[btn.dataset.index].qty +=1; updateCartDisplay(); }
-      });
-      document.querySelectorAll('.decrease').forEach(btn=>{
-        btn.onclick = ()=>{
-          const i = btn.dataset.index;
-          if(cart[i].qty>1) cart[i].qty -=1;
-          else cart.splice(i,1);
-          updateCartDisplay();
-        }
-      });
-      document.querySelectorAll('.remove').forEach(btn=>{
-        btn.onclick = ()=>{ cart.splice(btn.dataset.index,1); updateCartDisplay(); }
-      });
-    }
-
-    // Checkout → Paystack
-    document.getElementById('checkoutBtn').addEventListener('click', ()=>{
-      if(cart.length===0){ alert("Your cart is empty!"); return; }
-      const totalAmount = cart.reduce((acc,item)=>acc+item.price*item.qty,0);
-      const amountInKobo = totalAmount*100;
-
-      let handler = PaystackPop.setup({
-        key: 'pk_live_640af38072f48339462a8937bed12dda2774a34d',
-        email: prompt("Enter your email for payment:"),
-        amount: amountInKobo,
-        currency: 'GHS',
-        ref: 'SM_' + Math.floor(Math.random()*1000000000+1),
-        callback: function(response){
-          alert('Payment successful! Reference: '+response.reference);
-          cart=[];
-          updateCartDisplay();
-          cartPopup.style.display='none';
-        },
-        onClose: function(){ alert('Payment not completed.'); }
-      });
-
-      handler.openIframe();
-    });
-  </script>
-</body>
-</html>
+        btn.onclick = ()=>{ cart[btn.dataset.index].qty +=1; updateCart
