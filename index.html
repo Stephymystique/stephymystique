@@ -137,9 +137,9 @@
   <script>
     function payWithPaystack(product, amount) {
       var handler = PaystackPop.setup({
-        key: 'pk_live_640af38072f48339462a8937bed12dda2774a34d', // your LIVE key
-        email: 'orders@stephymystique.com', // use your real business email
-        amount: amount * 100, // amount in pesewas
+        key: 'pk_test_69bb25e8c7bb50617ece7cf4fbd0c442d5217485', // your test key
+        email: 'ileona@example.com', // use your real email for testing
+        amount: amount * 100, // in pesewas
         currency: 'GHS',
         ref: 'SM-' + Math.floor((Math.random() * 1000000000) + 1),
         metadata: {
@@ -153,7 +153,6 @@
         },
         callback: function(response) {
           alert('✅ Payment successful! Ref: ' + response.reference);
-          window.location.href = "thankyou.html"; // redirect to success page
         },
         onClose: function() {
           alert('❌ Payment window closed.');
