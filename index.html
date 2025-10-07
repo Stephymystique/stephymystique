@@ -125,12 +125,68 @@
     <button type="button" id="closePayment">Cancel</button>
   </form>
 </div>
+<script>
+  const checkoutBtn = document.getElementById('checkoutBtn');
+  const paymentForm = document.getElementById('paymentForm');
+  const paymentPopup = document.getElementById('paymentPopup');
 
+  // Open payment popup when checkout button is clicked
+  checkoutBtn.addEventListener('click', () => {
+    paymentPopup.style.display = 'block';
+  });
 
-    <script src="script.js"></script>
+  // Close payment popup
+  document.getElementById('closePayment').addEventListener('click', () => {
+    paymentPopup.style.display = 'none';
+  });
 
-    <script src="https://js.paystack.co/v1/inline.js"></script>
+  // Handle Paystack payment on form submit
+  paymentForm.addEventListener('submit', function(e) {
+    e.preventDefault();
+
+    const name = paymentForm.name.value;
+    const email = paymentForm.email.value;
+
+    // Get the total directly from your cart popup
+    const cartTotalElement = document.getElementById('cartTotal');
+    let totalAmount = parseFloat(cartTotalElement.textContent);
+    if (isNaN(totalAmount) || totalAmount <= 0) {
+      alert("Your cart is empty!");
+      return;
+    }
+
+    const amountInKobo = totalAmount * 100; // Convert GH¢ to kobo
+
+    let handler = PaystackPop.setup({
+      key: 'pk_live_640af38072f48339462a8937bed12dda2774a34d', // Live key
+      email: email,
+      amount: amountInKobo,
+      currency: 'GHS',
+      ref: 'SM_' + Math.floor(Math.random() * 1000000000 + 1),
+      metadata: {
+        custom_fields: [
+          { display_name: "Customer Name", variable_name: "name", value: name }
+        ]
+      },
+      callback: function(response) {
+        alert('Payment successful! Reference: ' + response.reference);
+        paymentPopup.style.display = 'none';
+        // Optional: clear cart or redirect to success page
+        window.location.href = "success.html";
+      },
+      onClose: function() {
+        alert('Payment was not completed.');
+      }
+    });
+
+    handler.openIframe();
+  });
+</script>
+
+    
+   
 
   </body>
   </html>
+
 
