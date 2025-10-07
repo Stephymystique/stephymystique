@@ -1,147 +1,147 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Stephy Mystique</title>
-
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Stephy Mystique | Lip Care Collection</title>
   <style>
-    /* 🌊 Global Styling */
     body {
-      font-family: 'Poppins', sans-serif;
-      background-color: #b3e0f2; /* sea blue */
+      font-family: "Poppins", sans-serif;
+      background-color: #1bb1d3; /* sea blue */
       margin: 0;
       padding: 0;
-      text-align: center;
       color: #333;
+      text-align: center;
     }
 
     header {
-      background-color: #0077b6;
-      color: white;
-      padding: 20px 0;
-      font-size: 24px;
-      font-weight: bold;
-      letter-spacing: 1px;
-    }
-
-    /* 🛍️ Product Grid */
-    .products {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
-      gap: 25px;
-      padding: 40px;
-    }
-
-    /* 💎 Product Card */
-    .product {
-      background: #ffffff;
-      border-radius: 20px;
-      box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+      background: white;
       padding: 20px;
-      transition: transform 0.3s ease, box-shadow 0.3s ease;
+      box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+    }
+
+    header h1 {
+      color: #1bb1d3;
+      margin: 0;
+      font-size: 28px;
+    }
+
+    .container {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      gap: 25px;
+      padding: 40px 20px;
+    }
+
+    .product {
+      background: white;
+      border-radius: 15px;
+      width: 240px;
+      padding: 20px;
+      box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+      transition: transform 0.3s;
     }
 
     .product:hover {
       transform: scale(1.05);
-      box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15);
     }
 
-    /* 💋 Product Images */
     .product img {
       width: 100%;
-      max-width: 260px;
-      height: auto;
-      border-radius: 15px;
-      margin-bottom: 10px;
+      height: 200px;
+      object-fit: cover;
+      border-radius: 12px;
     }
 
-    /* ✨ Product Text */
-    .product h3 {
-      font-size: 18px;
-      margin-bottom: 5px;
-      color: #0077b6;
+    .product h2 {
+      font-size: 20px;
+      color: #1bb1d3;
     }
 
     .product p {
-      font-size: 15px;
-      color: #444;
+      font-size: 16px;
+      margin: 5px 0;
     }
 
-    /* 💖 Buy Button */
     button {
-      background-color: #0077b6;
+      background-color: #1bb1d3;
       color: white;
       border: none;
-      border-radius: 25px;
-      padding: 8px 16px;
+      padding: 10px 20px;
+      border-radius: 8px;
+      font-size: 16px;
       cursor: pointer;
-      transition: background-color 0.3s ease;
+      transition: background-color 0.3s;
     }
 
     button:hover {
-      background-color: #005f8c;
+      background-color: #1490af;
     }
 
     footer {
-      background-color: #0077b6;
-      color: white;
-      padding: 15px 0;
-      margin-top: 40px;
-      font-size: 14px;
+      background: white;
+      padding: 15px;
+      margin-top: 30px;
+      box-shadow: 0 -2px 10px rgba(0, 0, 0, 0.1);
+      color: #1bb1d3;
+      font-weight: 600;
     }
   </style>
 </head>
 <body>
-
   <header>
-    Stephy Mystique 💋
+    <h1>💋 Stephy Mystique – Lip Care Collection 💋</h1>
   </header>
 
-  <section class="products">
+  <div class="container">
     <div class="product">
-      <img src="images/lipgloss.jpg" alt="Lip Gloss">
-      <h3>Lip Gloss</h3>
-      <p>GH₵35.00</p>
-      <button onclick="payWithPaystack('Lip Gloss', 35)">Buy Now</button>
+      <img src="images/lip1.jpg" alt="Lip Care Set 1" />
+      <h2>Basic Lip Set</h2>
+      <p>Includes Lip Scrub, Lip Brush & Lip Gloss</p>
+      <p><strong>GHS 35</strong></p>
+      <button onclick="payWithPaystack('Basic Lip Set', 35)">Buy Now</button>
     </div>
 
     <div class="product">
-      <img src="images/lipscrub.jpg" alt="Lip Scrub">
-      <h3>Lip Scrub</h3>
-      <p>GH₵45.00</p>
-      <button onclick="payWithPaystack('Lip Scrub', 45)">Buy Now</button>
+      <img src="images/lip2.jpg" alt="Lip Care Set 2" />
+      <h2>Premium Lip Set</h2>
+      <p>Includes Lip Scrub, Lip Brush, Balm & Gloss</p>
+      <p><strong>GHS 55</strong></p>
+      <button onclick="payWithPaystack('Premium Lip Set', 55)">Buy Now</button>
     </div>
 
     <div class="product">
-      <img src="images/lipbalm.jpg" alt="Lip Balm">
-      <h3>Lip Balm</h3>
-      <p>GH₵55.00</p>
-      <button onclick="payWithPaystack('Lip Balm', 55)">Buy Now</button>
+      <img src="images/lip3.jpg" alt="Lip Care Set 3" />
+      <h2>Hydra Mask Set</h2>
+      <p>Includes 2 Lip Masks, Scrub & Brush</p>
+      <p><strong>GHS 45</strong></p>
+      <button onclick="payWithPaystack('Hydra Mask Set', 45)">Buy Now</button>
     </div>
 
     <div class="product">
-      <img src="images/lipmask.jpg" alt="Lip Mask">
-      <h3>Lip Mask</h3>
-      <p>GH₵45.00</p>
-      <button onclick="payWithPaystack('Lip Mask', 45)">Buy Now</button>
+      <img src="images/lip4.jpg" alt="Lip Care Set 4" />
+      <h2>Glow Combo Set</h2>
+      <p>Includes 3 Lip Masks, Scrub & Gloss</p>
+      <p><strong>GHS 65</strong></p>
+      <button onclick="payWithPaystack('Glow Combo Set', 65)">Buy Now</button>
     </div>
-  </section>
+  </div>
 
   <footer>
-    © 2025 Stephy Mystique | Designed by Ileona Aniagyei 💙
+    © 2025 Stephy Mystique | All Rights Reserved
   </footer>
 
-  <!-- 💳 Paystack Integration -->
+  <!-- Paystack Integration -->
   <script src="https://js.paystack.co/v1/inline.js"></script>
   <script>
-    function payWithPaystack(product, amount){
-      let handler = PaystackPop.setup({
-        key: 'pk_test_69bb25e8c7bb50617ece7cf4fbd0c442d5217485', // your test key
-        email: 'customer@email.com',
-        amount: amount * 100, // in pesewas
+    function payWithPaystack(product, amount) {
+      var handler = PaystackPop.setup({
+        key: 'pk_live_640af38072f48339462a8937bed12dda2774a34d', // your LIVE key
+        email: 'orders@stephymystique.com', // use your real business email
+        amount: amount * 100, // amount in pesewas
         currency: 'GHS',
-        ref: ''+Math.floor((Math.random() * 1000000000) + 1),
+        ref: 'SM-' + Math.floor((Math.random() * 1000000000) + 1),
         metadata: {
           custom_fields: [
             {
@@ -151,16 +151,16 @@
             }
           ]
         },
-        callback: function(response){
-          alert('✅ Payment successful! Reference: ' + response.reference);
+        callback: function(response) {
+          alert('✅ Payment successful! Ref: ' + response.reference);
+          window.location.href = "thankyou.html"; // redirect to success page
         },
-        onClose: function(){
-          alert('Payment window closed ❌');
+        onClose: function() {
+          alert('❌ Payment window closed.');
         }
       });
       handler.openIframe();
     }
   </script>
-
 </body>
 </html>
