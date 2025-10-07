@@ -6,18 +6,121 @@
   <title>Stephy Mystique | Shop</title>
   <link rel="stylesheet" href="style.css" />
   <style>
+    /* CART POPUP */
     .cart-popup {
-      position: fixed; top: 50%; left: 50%;
+      position: fixed; 
+      top: 50%; 
+      left: 50%;
       transform: translate(-50%, -50%);
-      background: white; padding: 20px; border: 2px solid #ccc;
-      z-index: 999; display: none; width: 90%; max-width: 400px;
+      background: white; 
+      padding: 20px; 
+      border: 2px solid #ccc;
+      z-index: 999; 
+      display: none; 
+      width: 90%; 
+      max-width: 400px;
+      border-radius: 10px;
     }
-    .cart-popup button { margin: 5px 5px 0 0; }
-    .cart-popup div span { display: inline-block; min-width: 120px; }
-    .product { display:inline-block; margin:10px; text-align:center; }
-    .product img { width:150px; height:150px; object-fit:cover; }
-    #orderSummary { display:none; margin-top:10px; border-top:1px solid #ccc; padding-top:10px; }
-    #orderSummary pre { white-space: pre-wrap; word-wrap: break-word; }
+    .cart-popup button { 
+      margin: 5px 5px 0 0; 
+      padding: 6px 12px;
+      font-size: 0.95rem;
+    }
+    .cart-popup div span { 
+      display: inline-block; 
+      min-width: 120px; 
+      font-size: 0.95rem;
+    }
+
+    /* PRODUCT GRID */
+    .products {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr); /* 3 products per row on desktop */
+      gap: 20px;
+      padding: 20px 5%;
+    }
+
+    .product {
+      text-align: center;
+      border-radius: 10px;
+      padding: 10px;
+      transition: transform 0.3s;
+      background-color: #fff;
+      box-shadow: 0 2px 6px rgba(0,0,0,0.1);
+    }
+
+    .product:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+    }
+
+    .product img {
+      width: 100%;
+      max-width: 250px; /* larger images */
+      height: auto;
+      object-fit: cover;
+      border-radius: 10px;
+      margin-bottom: 10px;
+    }
+
+    .product h3 {
+      font-size: 1.2rem;
+      margin: 10px 0 5px;
+      color: #007c91;
+    }
+
+    .product p {
+      font-size: 1.1rem;
+      font-weight: bold;
+      color: #007c91;
+      margin-bottom: 8px;
+    }
+
+    .product button {
+      font-size: 1rem;
+      padding: 8px 12px;
+      border-radius: 5px;
+      border: none;
+      background-color: #00acc1;
+      color: #fff;
+      cursor: pointer;
+      transition: background 0.3s;
+    }
+
+    .product button:hover {
+      background-color: #007c91;
+    }
+
+    /* ORDER SUMMARY */
+    #orderSummary {
+      display:none; 
+      margin-top:10px; 
+      border-top:1px solid #ccc; 
+      padding-top:10px; 
+      font-size: 0.95rem;
+    }
+
+    #orderSummary pre { 
+      white-space: pre-wrap; 
+      word-wrap: break-word; 
+    }
+
+    /* RESPONSIVE */
+    @media (max-width:1024px) {
+      .products {
+        grid-template-columns: repeat(2, 1fr); /* 2 products per row on tablet */
+      }
+    }
+
+    @media (max-width:768px) {
+      .products {
+        grid-template-columns: 1fr; /* 1 product per row on mobile */
+      }
+
+      .product img {
+        max-width: 100%;
+      }
+    }
   </style>
 </head>
 <body>
