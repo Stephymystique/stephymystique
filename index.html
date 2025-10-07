@@ -78,18 +78,7 @@
       <button id="closeCart">Close</button>
     </div>
 
-    <!-- PAYMENT POPUP -->
-    <div id="paymentPopup" class="payment-popup">
-      <h3>Payment & Delivery</h3>
-      <form id="paymentForm">
-        <label>Name:</label>
-        <input type="text" name="name" required>
-        
-        <label>Delivery Method:</label>
-        <select name="delivery" required>
-          <option value="delivery">Delivery</option>
-          <option value="pickup">Pickup</option>
-        </select>
+    
         
         <label>Location (if Delivery):</label>
         <input type="text" name="location">
@@ -106,16 +95,42 @@
       </form>
     </div>
 
-    <!-- NETWORK POPUP -->
-    <div id="networkPopup" class="network-popup">
-      <h4 id="networkTitle"></h4>
-      <p>Send payment to: <strong>+233553314773</strong></p>
-      <label>Amount (₵):</label>
-      <input type="number" id="networkAmount" min="1">
-      <button id="networkConfirm">Confirm</button>
-      <button id="networkClose">Cancel</button>
+  <!-- PAYMENT POPUP -->
+<div id="paymentPopup" class="payment-popup" style="display:none;">
+  <h3>Payment & Delivery</h3>
+  <form id="paymentForm">
+    <label>Name:</label>
+    <input type="text" name="name" required>
+
+    <label>Email:</label>
+    <input type="email" name="email" required placeholder="customer@example.com">
+
+    <label>Delivery Method:</label>
+    <select name="delivery" required>
+      <option value="delivery">Delivery</option>
+      <option value="pickup">Pickup</option>
+    </select>
+
+    <label>Location (if Delivery):</label>
+    <input type="text" name="location">
+
+    <p>Select Mobile Money Network (optional):</p>
+    <div class="network-buttons">
+      <button type="button" class="network-btn" data-network="MTN" data-code="*170#">MTN</button>
+      <button type="button" class="network-btn" data-network="AirtelTigo" data-code="*110#">Airtel/Tigo</button>
+      <button type="button" class="network-btn" data-network="Telecel" data-code="*123#">Telecel</button>
     </div>
 
+    <button type="submit">Pay & Confirm</button>
+    <button type="button" id="closePayment">Cancel</button>
+  </form>
+</div>
+
+
     <script src="script.js"></script>
+
+    <script src="https://js.paystack.co/v1/inline.js"></script>
+
   </body>
   </html>
+
