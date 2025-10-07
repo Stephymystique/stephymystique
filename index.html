@@ -162,32 +162,55 @@
       });
     }
 
-    // Checkout button with delivery details
+    // Checkout button with Paystack integration
     document.getElementById('checkoutBtn').addEventListener('click', () => {
       const name = document.getElementById('customerName').value.trim();
       const phone = document.getElementById('customerPhone').value.trim();
       const address = document.getElementById('customerAddress').value.trim();
 
-      if(!name || !phone || !address){
+      if (!name || !phone || !address) {
         alert("Please fill in all delivery details!");
         return;
       }
 
-      if(cart.length === 0){
+      if (cart.length === 0) {
         alert("Your cart is empty!");
         return;
       }
 
-      let orderSummary = "Order Summary:\n\n";
-      cart.forEach(item => {
-        orderSummary += `${item.name} x ${item.qty} = ₵${(item.price*item.qty).toFixed(2)}\n`;
+      // Calculate total amount in kobo
+      const totalAmount = cart.reduce((acc, item) => acc + item.price * item.qty, 0) * 100;
+
+      // Prepare metadata for Paystack (delivery info + order items)
+      const metadata = {
+        custom_fields: [
+          { display_name: "Customer Name", value: name },
+          { display_name: "Phone Number", value: phone },
+          { display_name: "Delivery Address", value: address },
+          { display_name: "Order Items", value: cart.map(i => `${i.name} x${i.qty}`).join(", ") }
+        ]
+      };
+
+      // Initialize Paystack
+      const handler = PaystackPop.setup({
+        key: 'pk_live_640af38072f48339462a8937bed12dda2774a34d', // Your live public key
+        email: 'customer@example.com', // Replace with dynamic email if available
+        amount: totalAmount, // in kobo
+        currency: 'GHS',
+        ref: 'SM-' + Math.floor(Math.random() * 1000000000 + 1),
+        metadata: metadata,
+        callback: function(response) {
+          alert('Payment successful! Reference: ' + response.reference);
+          cart = [];
+          updateCartDisplay();
+          cartPopup.style.display = 'none';
+        },
+        onClose: function() {
+          alert('Payment window closed.');
+        }
       });
-      orderSummary += `\nTotal: ₵${cart.reduce((acc,item)=>acc+item.price*item.qty,0).toFixed(2)}`;
-      orderSummary += `\n\nDelivery Details:\nName: ${name}\nPhone: ${phone}\nAddress: ${address}`;
 
-      alert(orderSummary);
-
-      // Here you can integrate Paystack payment using the cart + delivery details
+      handler.openIframe();
     });
   </script>
 </body>
