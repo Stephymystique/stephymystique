@@ -51,8 +51,8 @@ function updateCart() {
   cartTotalSpan.textContent = total.toFixed(2);
 }
 
-// Show cart popup
-document.querySelector(".cart").addEventListener("click", () => {
+// Show cart popup using button
+document.getElementById("cart-button").addEventListener("click", () => {
   cartPopup.style.display = "block";
 });
 
@@ -61,52 +61,31 @@ closeCartBtn.addEventListener("click", () => {
   cartPopup.style.display = "none";
 });
 
-// CHECKOUT
-const paymentPopup = document.getElementById("paymentPopup");
-const closePaymentBtn = document.getElementById("closePayment");
-
+// CHECKOUT - Paystack Integration
 checkoutBtn.addEventListener("click", () => {
-  cartPopup.style.display = "none";
-  paymentPopup.style.display = "block";
-});
-
-closePaymentBtn.addEventListener("click", () => {
-  paymentPopup.style.display = "none";
-});
-
-// NETWORK POPUP
-const networkPopup = document.getElementById("networkPopup");
-const networkTitle = document.getElementById("networkTitle");
-const networkClose = document.getElementById("networkClose");
-const networkConfirm = document.getElementById("networkConfirm");
-const networkAmount = document.getElementById("networkAmount");
-
-document.querySelectorAll('.network-btn').forEach(btn => {
-  btn.addEventListener("click", () => {
-    const network = btn.dataset.network;
-    const code = btn.dataset.code;
-    networkTitle.textContent = `Pay with ${network}`;
-    // Simulate dialing code
-    alert(`Dialing ${code}...`);
-    networkPopup.style.display = "block";
-  });
-});
-
-networkClose.addEventListener("click", () => {
-  networkPopup.style.display = "none";
-});
-
-networkConfirm.addEventListener("click", () => {
-  const amount = networkAmount.value;
-  if(amount && amount > 0){
-    alert(`Payment of ₵${amount} sent to +233553314773. Thank you!`);
-    networkPopup.style.display = "none";
-    paymentPopup.style.display = "none";
-    cart = [];
-    updateCart();
-  } else {
-    alert("Enter a valid amount.");
+  const amount = Math.round(cart.reduce((sum,item)=>sum+item.price*item.qty,0) * 100); // amount in kobo
+  if(amount <= 0){
+    alert("Your cart is empty!");
+    return;
   }
+
+  const handler = PaystackPop.setup({
+    key: 'pk_live_640af38072f48339462a8937bed12dda2774a34d', // your live public key
+    email: 'customer@example.com', // replace with dynamic email if needed
+    amount: amount,
+    currency: "GHS",
+    onClose: function(){
+      alert('Payment cancelled.');
+    },
+    callback: function(response){
+      alert('Payment successful! Transaction reference: ' + response.reference);
+      cart = [];
+      updateCart();
+      cartPopup.style.display = "none";
+    }
+  });
+
+  handler.openIframe();
 });
 
 // SEARCH FUNCTIONALITY
