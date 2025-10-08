@@ -6,37 +6,38 @@
   <title>Stephy Mystique | Shop</title>
   <link rel="stylesheet" href="style.css" />
 </head>
-<body>
+<body style="background-color:#f8f9fa;">
+
   <!-- HEADER -->
-  <header class="header">
-    <div class="logo">
-      <img src="images/logo.png" alt="Stephy Mystique Logo" />
-      <h1>Stephy Mystique</h1>
+  <header class="header" style="background-color:#ffffff; border-bottom:1px solid #ddd; display:flex; align-items:center; justify-content:space-between; padding:10px 20px;">
+    <div class="logo" style="display:flex; align-items:center; gap:10px;">
+      <img src="images/logo.png" alt="Stephy Mystique Logo" style="width:50px; height:50px; object-fit:cover;" />
+      <h1 style="font-size:22px; color:#333;">Stephy Mystique</h1>
     </div>
-    <nav class="nav-links">
-      <a href="#">Home</a>
-      <a href="#">Shop</a>
-      <a href="#">Contact</a>
+    <nav class="nav-links" style="display:flex; gap:15px;">
+      <a href="#" style="color:#333; text-decoration:none;">Home</a>
+      <a href="#" style="color:#333; text-decoration:none;">Shop</a>
+      <a href="#" style="color:#333; text-decoration:none;">Contact</a>
     </nav>
-    <div class="header-search">
-      <input type="text" id="searchInput" placeholder="Search products..." />
+    <div class="header-search" style="display:flex; align-items:center; gap:5px;">
+      <input type="text" id="searchInput" placeholder="Search products..." style="padding:5px 10px; border:1px solid #ccc; border-radius:5px;" />
       <span class="search-icon">🔍</span>
     </div>
-    <div class="header-actions">
-      <button id="signupBtn" class="btn">Sign Up / Login</button>
-      <button id="cart-button" class="cart"> 🛒 <span class="cart-count">0</span></button>
+    <div class="header-actions" style="display:flex; gap:10px;">
+      <button id="signupBtn" class="btn" style="background:#333; color:#fff; border:none; padding:6px 12px; border-radius:5px;">Sign Up / Login</button>
+      <button id="cart-button" class="cart" style="background:#fff; border:1px solid #ccc; padding:6px 12px; border-radius:5px;">🛒 <span class="cart-count">0</span></button>
     </div>
   </header>
 
-  <!-- WELCOME BANNER -->
-  <section class="welcome-banner" style="background-color:#ffb6c1; color:#fff; text-align:center; padding:10px; font-weight:bold; font-size:18px;">
-    💋 Welcome to Stephy Mystique — Shop Our Beauty Essentials!
+  <!-- WELCOME BANNER (White + soft shadow like Jumia) -->
+  <section class="welcome-banner" style="background-color:#ffffff; color:#333; text-align:center; padding:15px; font-weight:bold; font-size:18px; box-shadow:0 2px 4px rgba(0,0,0,0.1);">
+    💋 Welcome to <strong>Stephy Mystique</strong> — Your Beauty & Lifestyle Destination!
   </section>
 
   <!-- MAIN WRAPPER -->
   <div class="main-layout" style="display:flex;">
-    <!-- SIDEBAR CATEGORIES -->
-    <aside class="sidebar" style="width:220px; background:#fff; padding:15px;">
+    <!-- SIDEBAR -->
+    <aside class="sidebar" style="width:220px; background:#ffffff; padding:15px; border-right:1px solid #ddd;">
       <h3>Categories</h3>
       <ul style="list-style:none; padding:0;">
         <li><a href="#">💄 Lip Care</a></li>
@@ -50,37 +51,34 @@
     <!-- MAIN CONTENT -->
     <main style="flex:1; padding:10px;">
       <!-- HERO -->
-      <section class="hero">
+      <section class="hero" style="background:#ffffff; text-align:center; padding:20px; margin-bottom:10px; border-radius:10px; box-shadow:0 2px 5px rgba(0,0,0,0.05);">
         <h2>Discover Trendy Fashion &amp; Beauty Finds</h2>
         <p>Shop the latest styles, accessories &amp; glam essentials — all in one place!</p>
       </section>
 
-      <!-- PRODUCT GRID -->
-      <section class="products">
-        <!-- 20 products -->
-        <div class="product">
-          <img src="images/product1.jpg" alt="">
+      <!-- PRODUCTS -->
+      <section class="products" style="display:grid; grid-template-columns:repeat(auto-fill,minmax(180px,1fr)); gap:15px;">
+        <div class="product" style="background:#fff; border-radius:10px; padding:10px; box-shadow:0 2px 5px rgba(0,0,0,0.05); text-align:center;">
+          <img src="images/product1.jpg" alt="" style="width:100%; border-radius:10px;">
           <h3>Lip Gloss</h3>
           <p>₵25</p>
-          <button>Add to Cart</button>
-          <div class="rating">
+          <button style="background:#333; color:#fff; border:none; padding:5px 10px; border-radius:5px;">Add to Cart</button>
+          <div class="rating" style="margin-top:8px;">
             ⭐⭐⭐⭐⭐
-            <textarea placeholder="Leave a comment..."></textarea>
+            <textarea placeholder="Leave a comment..." style="width:100%; margin-top:5px; border-radius:5px; border:1px solid #ccc;"></textarea>
           </div>
         </div>
 
-        <div class="product">
-          <img src="images/product2.jpg" alt="">
+        <div class="product" style="background:#fff; border-radius:10px; padding:10px; box-shadow:0 2px 5px rgba(0,0,0,0.05); text-align:center;">
+          <img src="images/product2.jpg" alt="" style="width:100%; border-radius:10px;">
           <h3>Lip Mask</h3>
           <p>₵10</p>
-          <button>Add to Cart</button>
-          <div class="rating">
-            ⭐⭐⭐⭐⭐
-            <textarea placeholder="Leave a comment..."></textarea>
+          <button style="background:#333; color:#fff; border:none; padding:5px 10px; border-radius:5px;">Add to Cart</button>
+          <div class="rating" style="margin-top:8px;">
+            ⭐⭐⭐⭐☆
+            <textarea placeholder="Leave a comment..." style="width:100%; margin-top:5px; border-radius:5px; border:1px solid #ccc;"></textarea>
           </div>
         </div>
-
-        <!-- (Keep rest of your 18 products as they are; you can copy rating section under each one) -->
       </section>
     </main>
   </div>
@@ -93,7 +91,6 @@
     <p id="deliveryFee">Delivery Fee: ₵35 (Speedaf)</p>
     <p><strong>Total with Delivery:</strong> ₵<span id="cartTotalWithDelivery">0.00</span></p>
 
-    <!-- DELIVERY DETAILS -->
     <div id="deliveryDetails" style="margin-top:10px;">
       <h4>Delivery Details</h4>
       <input type="text" id="customerName" placeholder="Full Name" style="width:100%; margin-bottom:5px;" />
@@ -105,7 +102,6 @@
     <button id="checkoutBtn">Checkout</button>
     <button id="closeCart">Close</button>
 
-    <!-- ORDER SUMMARY -->
     <div id="orderSummary">
       <h4>Order Summary</h4>
       <pre id="orderSummaryText"></pre>
@@ -113,7 +109,7 @@
     </div>
   </div>
 
-  <!-- SIGN UP / LOGIN POPUP -->
+  <!-- SIGN UP POPUP -->
   <div id="signupPopup" class="popup" style="display:none; position:fixed; top:0; left:0; width:100%; height:100%; background:rgba(0,0,0,0.7); justify-content:center; align-items:center;">
     <div class="popup-content" style="background:#fff; padding:20px; border-radius:10px; width:300px; text-align:center;">
       <h3>Sign Up / Login</h3>
@@ -126,17 +122,15 @@
   </div>
 
   <!-- FOOTER -->
-  <footer class="footer">
+  <footer class="footer" style="background:#fff; border-top:1px solid #ddd; text-align:center; padding:15px; margin-top:20px;">
     <p>© 2025 Stephy Mystique | All Rights Reserved</p>
     <p>Follow us: <a href="#">Facebook</a> | <a href="#">Instagram</a> | <a href="#">Twitter</a></p>
-    <img src="images/ceo.jpg" alt="CEO">
+    <img src="images/ceo.jpg" alt="CEO" style="width:70px; border-radius:50%; margin-top:10px;">
     <p>CEO: Stephanie Aniagyei</p>
     <p>Why choose us: Best curated e-commerce experience, quality products & reliable delivery.</p>
   </footer>
 
-  <!-- PAYSTACK JS -->
   <script src="https://js.paystack.co/v1/inline.js"></script>
-
   <script src="script.js"></script>
 </body>
 </html>
