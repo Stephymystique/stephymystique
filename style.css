@@ -70,6 +70,26 @@ body {
   background-color: #f0f0f0; /* subtle hover effect */
 }
 
+/* Welcome Banner Slide-in */
+.welcome-banner {
+  background-color: #ffffff;
+  color: #000;
+  text-align: center;
+  padding: 15px;
+  font-weight: bold;
+  font-size: 20px;
+  position: relative;
+  top: -100px; /* start above view */
+  opacity: 0;
+  animation: slideDown 1s forwards; /* run animation */
+}
+
+@keyframes slideDown {
+  to {
+    top: 0;
+    opacity: 1;
+  }
+}
 
 }
 
@@ -353,4 +373,5 @@ body {
   .product p { font-size: 14px; }
   .product button { font-size: 12px; padding: 5px 8px; }
 }
+
 
