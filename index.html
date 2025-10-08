@@ -1,142 +1,129 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Stephy Mystique | Shop</title>
-  <link rel="stylesheet" href="style.css" />
-</head>
-<body>
-  <!-- HEADER -->
-  <header class="header">
-    <div class="logo">
-      <img src="images/logo.png" alt="Stephy Mystique Logo" />
-      <h1>Stephy Mystique</h1>
-    </div>
-    <nav class="nav-links">
-      <a href="#">Home</a>
-      <a href="#">Shop</a>
-      <a href="#">Contact</a>
-    </nav>
-    <div class="header-search">
-      <input type="text" id="searchInput" placeholder="Search products..." />
-      <span class="search-icon">🔍</span>
-    </div>
-    <div class="header-actions">
-      <button id="signupBtn" class="btn">Sign Up / Login</button>
-      <button id="cart-button" class="cart"> 🛒 <span class="cart-count">0</span></button>
-    </div>
-  </header>
+<!DOCTYPE html><html lang="en"><head>  <meta charset="UTF-8" />  <meta name="viewport" content="width=device-width, initial-scale=1.0" />  <title>Stephy Mystique | Shop</title>  <link rel="stylesheet" href="style.css" /></head><body>  <!-- HEADER -->  <header class="header"><div class="logo">
 
-  <!-- WELCOME BANNER -->
-  <section class="welcome-banner" style="background-color:#ffb6c1; color:#fff; text-align:center; padding:10px; font-weight:bold; font-size:18px;">
-    💋 Welcome to Stephy Mystique — Shop Our Beauty Essentials!
-  </section>
+  <img src="images/logo.png" alt="Stephy Mystique Logo" />
 
-  <!-- MAIN WRAPPER -->
-  <div class="main-layout" style="display:flex;">
-    <!-- SIDEBAR CATEGORIES -->
-    <aside class="sidebar" style="width:220px; background:#fff; padding:15px;">
-      <h3>Categories</h3>
-      <ul style="list-style:none; padding:0;">
-        <li><a href="#">💄 Lip Care</a></li>
-        <li><a href="#">🌸 Perfumes</a></li>
-        <li><a href="#">🧴 Face & Body</a></li>
-        <li><a href="#">💍 Accessories</a></li>
-        <li><a href="#">✨ Gift Sets</a></li>
-      </ul>
-    </aside>
+  <h1>Stephy Mystique</h1>
 
-    <!-- MAIN CONTENT -->
-    <main style="flex:1; padding:10px;">
-      <!-- HERO -->
-      <section class="hero">
-        <h2>Discover Trendy Fashion &amp; Beauty Finds</h2>
-        <p>Shop the latest styles, accessories &amp; glam essentials — all in one place!</p>
-      </section>
+</div>
 
-      <!-- PRODUCT GRID -->
-      <section class="products">
-        <!-- 20 products -->
-        <div class="product">
-          <img src="images/product1.jpg" alt="">
-          <h3>Lip Gloss</h3>
-          <p>₵25</p>
-          <button>Add to Cart</button>
-          <div class="rating">
-            ⭐⭐⭐⭐⭐
-            <textarea placeholder="Leave a comment..."></textarea>
-          </div>
-        </div>
+<nav class="nav-links">
 
-        <div class="product">
-          <img src="images/product2.jpg" alt="">
-          <h3>Lip Mask</h3>
-          <p>₵10</p>
-          <button>Add to Cart</button>
-          <div class="rating">
-            ⭐⭐⭐⭐⭐
-            <textarea placeholder="Leave a comment..."></textarea>
-          </div>
-        </div>
+  <a href="#">Home</a>
 
-        <!-- (Keep rest of your 18 products as they are; you can copy rating section under each one) -->
-      </section>
-    </main>
-  </div>
+  <a href="#">Shop</a>
 
-  <!-- CART POPUP -->
-  <div id="cartPopup" class="cart-popup">
-    <h3>Your Cart</h3>
-    <div id="cartItems"></div>
-    <p>Subtotal: ₵<span id="cartTotal">0.00</span></p>
-    <p id="deliveryFee">Delivery Fee: ₵35 (Speedaf)</p>
-    <p><strong>Total with Delivery:</strong> ₵<span id="cartTotalWithDelivery">0.00</span></p>
+  <a href="#">Contact</a>
 
-    <!-- DELIVERY DETAILS -->
-    <div id="deliveryDetails" style="margin-top:10px;">
-      <h4>Delivery Details</h4>
-      <input type="text" id="customerName" placeholder="Full Name" style="width:100%; margin-bottom:5px;" />
-      <input type="text" id="customerPhone" placeholder="Phone Number" style="width:100%; margin-bottom:5px;" />
-      <textarea id="customerAddress" placeholder="Delivery Address" style="width:100%; margin-bottom:5px;"></textarea>
-      <small id="deliveryNote" style="color:green; display:block; margin-top:5px;"></small>
-    </div>
+</nav>
 
-    <button id="checkoutBtn">Checkout</button>
-    <button id="closeCart">Close</button>
+<div class="header-search">
 
-    <!-- ORDER SUMMARY -->
-    <div id="orderSummary">
-      <h4>Order Summary</h4>
-      <pre id="orderSummaryText"></pre>
-      <button id="confirmPaymentBtn">OK</button>
-    </div>
-  </div>
+  <input type="text" id="searchInput" placeholder="Search products..." />
 
-  <!-- SIGN UP / LOGIN POPUP -->
-  <div id="signupPopup" class="popup" style="display:none; position:fixed; top:0; left:0; width:100%; height:100%; background:rgba(0,0,0,0.7); justify-content:center; align-items:center;">
-    <div class="popup-content" style="background:#fff; padding:20px; border-radius:10px; width:300px; text-align:center;">
-      <h3>Sign Up / Login</h3>
-      <input type="text" id="userName" placeholder="Full Name" style="width:100%; margin:5px 0;" />
-      <input type="email" id="userEmail" placeholder="Email" style="width:100%; margin:5px 0;" />
-      <input type="password" id="userPassword" placeholder="Password" style="width:100%; margin:5px 0;" />
-      <button id="signupSubmit">Submit</button>
-      <button id="signupClose">Close</button>
-    </div>
-  </div>
+  <span class="search-icon">🔍</span>
 
-  <!-- FOOTER -->
-  <footer class="footer">
-    <p>© 2025 Stephy Mystique | All Rights Reserved</p>
-    <p>Follow us: <a href="#">Facebook</a> | <a href="#">Instagram</a> | <a href="#">Twitter</a></p>
-    <img src="images/ceo.jpg" alt="CEO">
-    <p>CEO: Stephanie Aniagyei</p>
-    <p>Why choose us: Best curated e-commerce experience, quality products & reliable delivery.</p>
-  </footer>
+</div>
 
-  <!-- PAYSTACK JS -->
-  <script src="https://js.paystack.co/v1/inline.js"></script>
+<!-- ANIMATED WHITE CART ICON -->
 
-  <script src="script.js"></script>
-</body>
-</html>
+<button id="cart-button" class="cart"> 🛒 <span class="cart-count">0</span></button>
+
+  </header>  <!-- HERO -->  <section class="hero"><h2>Discover Trendy Fashion &amp; Beauty Finds</h2>
+
+<p>Shop the latest styles, accessories &amp; glam essentials — all in one place!</p>
+
+  </section>  <!-- PRODUCT GRID -->  <section class="products"><!-- 20 products -->
+
+<div class="product"><img src="images/product1.jpg" alt=""><h3>Lip Gloss</h3><p>₵25</p><button>Add to Cart</button></div>
+
+<div class="product"><img src="images/product2.jpg" alt=""><h3>Lip Mask</h3><p>₵10</p><button>Add to Cart</button></div>
+
+<div class="product"><img src="images/product3.jpg" alt=""><h3>Vaseline Lip Therapy</h3><p>₵16</p><button>Add to Cart</button></div>
+
+<div class="product"><img src="images/product4.jpg" alt=""><h3>Lip Oil</h3><p>₵25</p><button>Add to Cart</button></div>
+
+<div class="product"><img src="images/product5.jpg" alt=""><h3>Petal Soap</h3><p>₵10</p><button>Add to Cart</button></div>
+
+<div class="product"><img src="images/product6.jpg" alt=""><h3>Kiss Beauty Coffee Lip Scrub</h3><p>₵25</p><button>Add to Cart</button></div>
+
+<div class="product"><img src="images/product7.jpg" alt=""><h3>Romantic Rain Lip Gloss</h3><p>₵25</p><button>Add to Cart</button></div>
+
+<div class="product"><img src="images/product8.jpg" alt=""><h3>Face Brush</h3><p>₵30</p><button>Add to Cart</button></div>
+
+<div class="product"><img src="images/product9.jpg" alt=""><h3>Classic Lip Balm</h3><p>₵15</p><button>Add to Cart</button></div>
+
+<div class="product"><img src="images/product10.jpg" alt=""><h3>Vaseline Lip therapy</h3><p>₵16</p><button>Add to Cart</button></div>
+
+<div class="product"><img src="images/product11.jpg" alt=""><h3>Fruit Lip oil</h3><p>₵22</p><button>Add to Cart</button></div>
+
+<div class="product"><img src="images/product12.jpg" alt=""><h3>24k pure pink perfume</h3><p>₵150</p><button>Add to Cart</button></div>
+
+<div class="product"><img src="images/product13.jpg" alt=""><h3>Rk lip srcub</h3><p>₵20</p><button>Add to Cart</button></div>
+
+<div class="product"><img src="images/product14.jpg" alt=""><h3>lip gloss</h3><p>₵25</p><button>Add to Cart</button></div>
+
+<div class="product"><img src="images/product15.jpg" alt=""><h3>Lip gloss</h3><p>₵25</p><button>Add to Cart</button></div>
+
+<div class="product"><img src="images/product16.jpg" alt=""><h3>face mask</h3><p>₵20</p><button>Add to Cart</button></div>
+
+<div class="product"><img src="images/product17.jpg" alt=""><h3>Necklace </h3><p>₵25</p><button>Add to Cart</button></div>
+
+<div class="product"><img src="images/product18.jpg" alt=""><h3>Hand Cream</h3><p>₵23</p><button>Add to Cart</button></div>
+
+<div class="product"><img src="images/product19.jpg" alt=""><h3>Tongue Scrapper </h3><p>₵19</p><button>Add to Cart</button></div>
+
+<div class="product"><img src="images/product20.jpg" alt=""><h3>Ear ring</h3><p>₵26</p><button>Add to Cart</button></div>
+
+  </section>  <!-- CART POPUP -->  <div id="cartPopup" class="cart-popup"><h3>Your Cart</h3>
+
+<div id="cartItems"></div>
+
+<p>Total: ₵<span id="cartTotal">0.00</span></p>
+
+
+
+<!-- DELIVERY DETAILS -->
+
+<div id="deliveryDetails" style="margin-top:10px;">
+
+  <h4>Delivery Details</h4>
+
+  <input type="text" id="customerName" placeholder="Full Name" style="width:100%; margin-bottom:5px;" />
+
+  <input type="text" id="customerPhone" placeholder="Phone Number" style="width:100%; margin-bottom:5px;" />
+
+  <textarea id="customerAddress" placeholder="Delivery Address" style="width:100%; margin-bottom:5px;"></textarea>
+
+</div>
+
+
+
+<button id="checkoutBtn">Checkout</button>
+
+<button id="closeCart">Close</button>
+
+
+
+<!-- ORDER SUMMARY -->
+
+<div id="orderSummary">
+
+  <h4>Order Summary</h4>
+
+  <pre id="orderSummaryText"></pre>
+
+  <button id="confirmPaymentBtn">OK</button>
+
+</div>
+
+  </div>  <footer class="footer"><p>© 2025 Stephy Mystique | All Rights Reserved</p>
+
+<p>Follow us: <a href="#">Facebook</a> | <a href="#">Instagram</a> | <a href="#">Twitter</a></p>
+
+<img src="images/ceo.jpg" alt="CEO">
+
+<p>CEO: Stephanie Aniagyei</p>
+
+<p>Why choose us: Best curated e-commerce experience, quality products & reliable delivery.</p>
+
+  </footer>  <!-- PAYSTACK JS -->  <script src="https://js.paystack.co/v1/inline.js"></script>  <script src="script.js"></script> <!-- Keep your JS separate for cleanliness --></body></html>
