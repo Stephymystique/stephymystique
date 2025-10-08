@@ -54,17 +54,23 @@ body {
   margin-left: 5px;
 }
 
-/* CART ICON */
 .cart {
-  width: 48px;          /* bigger size */
-  height: 48px;
-  fill: #fff;           /* white for SVG icons */
-  color: #fff;          /* white for font icons */
+  background-color: #fff; /* White background */
+  border: none;
   cursor: pointer;
-  animation: bounce 1.2s infinite;  /* bounce animation */
+  padding: 8px 12px;
+  border-radius: 8px;
+  font-size: 24px;
   display: flex;
   align-items: center;
-  justify-content: center;
+  gap: 5px;
+}
+
+.cart:hover {
+  background-color: #f0f0f0; /* subtle hover effect */
+}
+
+
 }
 
 /* BOUNCE ANIMATION */
@@ -347,3 +353,4 @@ body {
   .product p { font-size: 14px; }
   .product button { font-size: 12px; padding: 5px 8px; }
 }
+
