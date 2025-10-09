@@ -135,9 +135,9 @@
   <footer class="footer">
     <p>© 2025 Stephy Mystique | All Rights Reserved</p>
     <p>Follow us: <a href="#">Facebook</a> | <a href="#">Instagram</a> | <a href="#">Twitter</a></p>
-    <img src="images/ceo.jpg" alt="CEO">
     <!-- CEO Info Section -->
 <div class="ceo-info">
+  <img src="images/ceo.jpg" alt="Stephanie Aniagyei" class="ceo-img">
   <h2 class="ceo-name">Stephanie Aniagyei</h2>
   <p class="ceo-contact">✉️ Stephymystique@gmail.com | 📞 0553314773</p>
 </div>
@@ -154,6 +154,17 @@
   margin: 40px auto;
   box-shadow: 0 8px 20px rgba(0,0,0,0.2);
   animation: fadeInUp 1.5s ease forwards;
+}
+
+/* CEO Image */
+.ceo-img {
+  width: 120px;
+  height: 120px;
+  object-fit: cover;
+  border-radius: 50%;
+  border: 4px solid white;
+  margin-bottom: 15px;
+  animation: fadeIn 2s ease forwards;
 }
 
 /* Name animation */
@@ -179,6 +190,11 @@
   100% {opacity: 1; transform: translateY(0);}
 }
 
+@keyframes fadeIn {
+  0% {opacity: 0;}
+  100% {opacity: 1;}
+}
+
 @keyframes shine {
   0% {background-position: -200%;}
   100% {background-position: 200%;}
@@ -190,6 +206,11 @@
 }
 </style>
 
+   
+
+ 
+</style>
+
   </footer>
 
   <!-- PAYSTACK JS -->
@@ -197,6 +218,7 @@
   <script src="script.js"></script>
 </body>
 </html>
+
 
 
 
