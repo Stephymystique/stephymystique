@@ -136,8 +136,60 @@
     <p>© 2025 Stephy Mystique | All Rights Reserved</p>
     <p>Follow us: <a href="#">Facebook</a> | <a href="#">Instagram</a> | <a href="#">Twitter</a></p>
     <img src="images/ceo.jpg" alt="CEO">
-    <p>CEO: Stephanie Aniagyei</p>
-    <p>Why choose us: Best curated e-commerce experience, quality products & reliable delivery.</p>
+    <!-- CEO Info Section -->
+<div class="ceo-info">
+  <h2 class="ceo-name">Stephanie Aniagyei</h2>
+  <p class="ceo-contact">✉️ Stephymystique@gmail.com | 📞 0553314773</p>
+</div>
+
+<style>
+/* CEO Section Styling */
+.ceo-info {
+  text-align: center;
+  background: linear-gradient(135deg, #ff9a9e, #fad0c4, #fbc2eb);
+  padding: 30px 20px;
+  border-radius: 20px;
+  color: white;
+  max-width: 450px;
+  margin: 40px auto;
+  box-shadow: 0 8px 20px rgba(0,0,0,0.2);
+  animation: fadeInUp 1.5s ease forwards;
+}
+
+/* Name animation */
+.ceo-name {
+  font-size: 28px;
+  font-weight: bold;
+  margin-bottom: 10px;
+  background: linear-gradient(90deg, #fff, #ffd700);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  animation: shine 2s infinite;
+}
+
+/* Contact animation */
+.ceo-contact {
+  font-size: 18px;
+  animation: pulse 2s infinite;
+}
+
+/* Animations */
+@keyframes fadeInUp {
+  0% {opacity: 0; transform: translateY(50px);}
+  100% {opacity: 1; transform: translateY(0);}
+}
+
+@keyframes shine {
+  0% {background-position: -200%;}
+  100% {background-position: 200%;}
+}
+
+@keyframes pulse {
+  0%, 100% {opacity: 1;}
+  50% {opacity: 0.6;}
+}
+</style>
+
   </footer>
 
   <!-- PAYSTACK JS -->
@@ -145,5 +197,6 @@
   <script src="script.js"></script>
 </body>
 </html>
+
 
 
