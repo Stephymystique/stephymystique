@@ -9,7 +9,7 @@
 body {
   background-color: #e0f7fa; /* Sea blue */
   color: #000;
-  font-size: 16px; /* standardized readable size */
+  font-size: 16px;
   line-height: 1.6;
 }
 
@@ -18,7 +18,7 @@ body {
   display: flex;
   align-items: center;
   justify-content: space-between;
-  background-color: #00acc1; /* Sea blue */
+  background-color: #00acc1;
   padding: 10px 5%;
   position: sticky;
   top: 0;
@@ -35,7 +35,7 @@ body {
   color: #fff;
   margin: 0 10px;
   text-decoration: none;
-  font-size: 16px; /* adjusted header font */
+  font-size: 16px;
 }
 
 .header .header-search {
@@ -49,13 +49,22 @@ body {
   border: none;
 }
 
-.header .header-search .search-icon {
-  cursor: pointer;
+.header .header-search button {
   margin-left: 5px;
+  padding: 5px 10px;
+  background-color: #007c91;
+  color: #fff;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+.header .header-search button:hover {
+  background-color: #005f6b;
 }
 
 .cart {
-  background-color: #fff; /* White background */
+  background-color: #fff;
   border: none;
   cursor: pointer;
   padding: 8px 12px;
@@ -67,8 +76,9 @@ body {
 }
 
 .cart:hover {
-  background-color: #f0f0f0; /* subtle hover effect */
+  background-color: #f0f0f0;
 }
+
 /* WELCOME BANNER SLIDE */
 .welcome-banner {
   background-color: #ffffff;
@@ -83,34 +93,14 @@ body {
   opacity: 0;
 
   /* Animation */
-  animation: slideDown 1s forwards;
-  animation-delay: 0.2s; /* optional delay */
+  animation: slideDownBanner 1s forwards;
+  animation-delay: 0.2s;
 }
 
-/* Keyframes for sliding down */
-@keyframes slideDown {
+@keyframes slideDownBanner {
   to {
     transform: translateY(0);
     opacity: 1;
-  }
-}
-
-
-  }
-}
-
-}
-
-/* BOUNCE ANIMATION */
-@keyframes bounce {
-  0%, 20%, 50%, 80%, 100% {
-    transform: translateY(0);
-  }
-  40% {
-    transform: translateY(-10px);
-  }
-  60% {
-    transform: translateY(-5px);
   }
 }
 
@@ -133,7 +123,7 @@ body {
 /* PRODUCTS GRID */
 .products {
   display: grid;
-  grid-template-columns: repeat(3, 1fr); /* exactly 3 per row */
+  grid-template-columns: repeat(3, 1fr);
   gap: 25px;
   padding: 20px 5%;
 }
@@ -153,7 +143,7 @@ body {
 
 .product img {
   width: 100%;
-  max-width: 250px; /* make image bigger */
+  max-width: 250px;
   height: auto;
   border-radius: 10px;
   margin-bottom: 10px;
@@ -161,7 +151,7 @@ body {
 
 .product h3 {
   margin: 10px 0 5px;
-  font-size: 20px; /* bigger */
+  font-size: 20px;
   color: #007c91;
 }
 
@@ -215,7 +205,7 @@ body {
   box-shadow: 0 5px 15px rgba(0,0,0,0.3);
   z-index: 200;
   animation: fadeIn 0.3s ease-in-out;
-  font-size: 16px; /* adjusted cart font */
+  font-size: 16px;
 }
 
 .cart-popup h3 {
@@ -284,8 +274,8 @@ body {
   max-width: 400px;
   z-index: 300;
   box-shadow: 0 5px 20px rgba(0,0,0,0.4);
-  animation: slideDown 0.3s ease-in-out;
-  font-size: 16px; /* adjusted font */
+  animation: slideDownPopup 0.3s ease-in-out;
+  font-size: 16px;
 }
 
 .payment-popup h3, .network-popup h3 {
@@ -335,9 +325,9 @@ body {
   to {opacity: 1;}
 }
 
-@keyframes slideDown {
-  from {opacity:0; transform: translate(-50%, -60%);}
-  to {opacity:1; transform: translate(-50%, -50%);}
+@keyframes slideDownPopup {
+  from {opacity:0; transform: translateY(-60%);}
+  to {opacity:1; transform: translateY(0);}
 }
 
 /* MEDIA QUERIES */
@@ -381,6 +371,3 @@ body {
   .product p { font-size: 14px; }
   .product button { font-size: 12px; padding: 5px 8px; }
 }
-
-
-
