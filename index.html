@@ -134,7 +134,48 @@
 
   <footer class="footer">
     <p>© 2025 Stephy Mystique | All Rights Reserved</p>
-    <p>Follow us: <a href="#">Facebook</a> | <a href="#">Instagram</a> | <a href="#">Twitter</a></p>
+    <!-- Social Media Buttons -->
+<div class="social-links">
+  <a href="https://www.tiktok.com/@stephymystique?_t=ZM-90OSSw3Q9uu&_r=1" target="_blank" class="social-btn tiktok">TikTok</a>
+  <a href="https://chat.whatsapp.com/FylrHzjqDBDJt9XooLbbyI" target="_blank" class="social-btn whatsapp">WhatsApp</a>
+  <a href="https://x.com/stephyhaizel?t=uU7u6bKVsdcZb833mKlNBw&s=09" target="_blank" class="social-btn twitter">X</a>
+  <a href="https://www.instagram.com/adjowa_serwaa_akoto?igsh=MWFycTd4NWl2N3Fu" target="_blank" class="social-btn instagram">Instagram</a>
+</div>
+
+<style>
+/* Social Buttons Container */
+.social-links {
+  text-align: center;
+  margin-top: 30px;
+}
+
+/* General Button Styles */
+.social-btn {
+  display: inline-block;
+  margin: 8px;
+  padding: 12px 25px;
+  color: white;
+  font-weight: bold;
+  border-radius: 10px;
+  text-decoration: none;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.2);
+  font-family: Arial, sans-serif;
+}
+
+/* Hover Animation */
+.social-btn:hover {
+  transform: scale(1.1);
+  box-shadow: 0 6px 16px rgba(0,0,0,0.3);
+}
+
+/* Platform Colors */
+.tiktok { background: linear-gradient(45deg, #69C9D0, #EE1D52); }
+.whatsapp { background: #25D366; }
+.twitter { background: #1DA1F2; }
+.instagram { background: radial-gradient(circle at 30% 107%, #fdf497 0%, #fd5949 45%, #d6249f 60%, #285AEB 90%); }
+</style>
+
     <!-- CEO Info Section -->
 <div class="ceo-info">
   <img src="images/ceo.jpg" alt="Stephanie Aniagyei" class="ceo-img">
@@ -210,6 +251,97 @@
 
  
 </style>
+<!-- Cookie Consent Banner -->
+<div id="cookie-banner">
+  <p>🍭 We use cookies to enhance your experience on <strong>Stephymystique</strong>.  
+    <button id="accept-cookies">Accept</button>
+    <button id="decline-cookies">Decline</button>
+  </p>
+</div>
+
+<style>
+/* Banner styling */
+#cookie-banner {
+  position: fixed;
+  bottom: -120px; /* hidden initially */
+  left: 50%;
+  transform: translateX(-50%);
+  background: linear-gradient(135deg, #ff9a9e, #fad0c4, #fbc2eb);
+  color: white;
+  padding: 15px 25px;
+  border-radius: 15px 15px 0 0;
+  box-shadow: 0 -6px 20px rgba(0,0,0,0.3);
+  font-family: 'Arial', sans-serif;
+  font-size: 16px;
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: center;
+  gap: 12px;
+  transition: bottom 0.6s ease;
+  z-index: 9999;
+  text-align: center;
+}
+
+/* Buttons styling */
+#cookie-banner button {
+  padding: 8px 18px;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  font-weight: bold;
+  transition: 0.3s ease;
+  font-family: inherit;
+}
+
+#accept-cookies { 
+  background: #25D366; 
+  color: white; 
+}
+#decline-cookies { 
+  background: #f44336; 
+  color: white; 
+}
+
+#cookie-banner button:hover {
+  transform: scale(1.1);
+}
+
+/* Bounce animation on text to attract attention */
+@keyframes bounce {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-6px); }
+}
+#cookie-banner p {
+  animation: bounce 3s infinite;
+}
+</style>
+
+<script>
+// Show banner after 1 second
+window.addEventListener('load', () => {
+  const banner = document.getElementById('cookie-banner');
+
+  // Only show if not already accepted/declined
+  if (!localStorage.getItem('cookiesAccepted')) {
+    setTimeout(() => {
+      banner.style.bottom = '20px';
+    }, 1000);
+  }
+
+  // Accept cookies
+  document.getElementById('accept-cookies').addEventListener('click', () => {
+    localStorage.setItem('cookiesAccepted', 'true');
+    banner.style.bottom = '-120px';
+  });
+
+  // Decline cookies
+  document.getElementById('decline-cookies').addEventListener('click', () => {
+    localStorage.setItem('cookiesAccepted', 'false');
+    banner.style.bottom = '-120px';
+  });
+});
+</script>
 
   </footer>
 
@@ -218,6 +350,7 @@
   <script src="script.js"></script>
 </body>
 </html>
+
 
 
 
