@@ -5,6 +5,48 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Stephy Mystique | Shop</title>
   <link rel="stylesheet" href="style.css" />
+  <style>
+    /* Welcome banner slide */
+    .welcome-banner {
+      background-color: #ffffff;
+      color: #000;
+      text-align: center;
+      padding: 15px;
+      font-weight: bold;
+      font-size: 20px;
+
+      /* Start off-screen */
+      transform: translateY(-100%);
+      opacity: 0;
+
+      /* Animation */
+      animation: slideDown 1s forwards;
+      animation-delay: 0.2s;
+    }
+
+    @keyframes slideDown {
+      to {
+        transform: translateY(0);
+        opacity: 1;
+      }
+    }
+
+    /* Search button styling */
+    #searchBtn {
+      padding: 6px 12px;
+      border-radius: 5px;
+      border: none;
+      background-color: #00acc1;
+      color: #fff;
+      cursor: pointer;
+      font-size: 16px;
+      margin-left: 5px;
+    }
+
+    #searchBtn:hover {
+      background-color: #007c91;
+    }
+  </style>
 </head>
 <body>
   <!-- HEADER -->
@@ -22,7 +64,7 @@
 
     <div class="header-search">
       <input type="text" id="searchInput" placeholder="Search products..." />
-      <button id="searchBtn" class="btn">Search</button>
+      <button id="searchBtn">Search</button>
     </div>
 
     <!-- ANIMATED WHITE CART ICON -->
@@ -30,7 +72,7 @@
   </header>
 
   <!-- WELCOME BANNER -->
-  <section class="welcome-banner" style="background-color:#ffffff; color:#000; text-align:center; padding:15px; font-weight:bold; font-size:20px;">
+  <section class="welcome-banner">
     💋 Welcome to Stephy Mystique — Shop Our Beauty Essentials!
   </section>
 
