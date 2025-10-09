@@ -69,8 +69,7 @@ body {
 .cart:hover {
   background-color: #f0f0f0; /* subtle hover effect */
 }
-
-/* Welcome Banner Slide-in */
+/* WELCOME BANNER SLIDE */
 .welcome-banner {
   background-color: #ffffff;
   color: #000;
@@ -78,16 +77,25 @@ body {
   padding: 15px;
   font-weight: bold;
   font-size: 20px;
-  position: relative;
-  top: -100px; /* start above view */
+
+  /* Start off-screen */
+  transform: translateY(-100%);
   opacity: 0;
-  animation: slideDown 1s forwards; /* run animation */
+
+  /* Animation */
+  animation: slideDown 1s forwards;
+  animation-delay: 0.2s; /* optional delay */
 }
 
+/* Keyframes for sliding down */
 @keyframes slideDown {
   to {
-    top: 0;
+    transform: translateY(0);
     opacity: 1;
+  }
+}
+
+
   }
 }
 
@@ -373,5 +381,6 @@ body {
   .product p { font-size: 14px; }
   .product button { font-size: 12px; padding: 5px 8px; }
 }
+
 
 
