@@ -1,357 +1,517 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Stephy Mystique | Shop</title>
-  <link rel="stylesheet" href="style.css" />
-  <style>
-    /* Welcome banner slide */
-    .welcome-banner {
-      background-color: #ffffff;
-      color: #000;
-      text-align: center;
-      padding: 15px;
-      font-weight: bold;
-      font-size: 20px;
-
-      /* Start off-screen */
-      transform: translateY(-100%);
-      opacity: 0;
-
-      /* Animation */
-      animation: slideDown 1s forwards;
-      animation-delay: 0.2s;
-    }
-
-    @keyframes slideDown {
-      to {
-        transform: translateY(0);
-        opacity: 1;
-      }
-    }
-
-    /* Search button styling */
-    #searchBtn {
-      padding: 6px 12px;
-      border-radius: 5px;
-      border: none;
-      background-color: #00acc1;
-      color: #fff;
-      cursor: pointer;
-      font-size: 16px;
-      margin-left: 5px;
-    }
-
-    #searchBtn:hover {
-      background-color: #007c91;
-    }
-  </style>
+<meta charset="utf-8"/>
+<meta name="viewport" content="width=device-width,initial-scale=1"/>
+<title>Stephy Mystique — Shop</title>
+<link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" rel="stylesheet">
+<style>
+  :root{
+    --primary:#00bcd4; /* sea blue */
+    --muted:#777;
+    --bg:#e0f7fa;
+    --card:#fbfbfb;
+    --max:1100px;
+    --radius:12px;
+  }
+  *{box-sizing:border-box}
+  body{font-family:Inter, Poppins, system-ui, -apple-system, Arial; margin:0; background:var(--bg); color:#222}
+  .app{max-width:var(--max);margin:0 auto}
+  header{background:var(--primary);color:#fff;padding:12px;display:flex;align-items:center;gap:12px;position:sticky;top:0;z-index:50}
+  .brand{font-weight:900;cursor:pointer}
+  .search{flex:1;display:flex;max-width:720px}
+  .search input{flex:1;padding:10px;border-radius:8px 0 0 8px;border:1px solid rgba(0,0,0,0.08)}
+  .search button{padding:10px;border-radius:0 8px 8px 0;border:1px solid rgba(0,0,0,0.08);background:#fff;cursor:pointer}
+  .icons{display:flex;gap:12px;align-items:center}
+  .icons a{color:#fff;text-decoration:none;position:relative}
+  .badge{position:absolute;top:-6px;right:-8px;background:#d92020;color:#fff;border-radius:999px;padding:2px 6px;font-size:11px}
+  nav{display:flex;gap:8px;padding:10px;background:#fff;border-bottom:1px solid #f1f1f1;overflow:auto}
+  nav button{background:#fff;border:1px solid #f2f2f2;padding:8px 12px;border-radius:999px;cursor:pointer;white-space:nowrap;color:var(--primary)}
+  nav button.active{background:var(--primary);color:#fff;border-color:var(--primary)}
+  main{padding:14px}
+  .hero{display:flex;gap:16px;align-items:center;justify-content:space-between;padding:12px;border-radius:12px;background:linear-gradient(90deg,#fff,#fff)}
+  .hero img{max-width:320px;border-radius:10px;object-fit:cover}
+  .grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(180px,1fr));gap:12px;margin-top:12px}
+  .product{background:var(--card);padding:10px;border-radius:12px;display:flex;flex-direction:column;gap:8px;min-height:270px;box-shadow:0 1px 2px rgba(0,0,0,0.03)}
+  .product .img{height:150px;border-radius:8px;overflow:hidden;display:flex;align-items:center;justify-content:center;background:#fff}
+  .product .img img{width:100%;height:100%;object-fit:cover}
+  .product h3{margin:0;font-size:1rem}
+  .product p{margin:0;color:var(--muted)}
+  .product .price{color:var(--primary);font-weight:800}
+  .product .actions{display:flex;gap:8px;margin-top:auto}
+  .btn{padding:8px;border-radius:8px;border:0;cursor:pointer}
+  .btn-primary{background:var(--primary);color:#fff}
+  .btn-outline{background:#fff;border:1px solid #ddd}
+  footer.bottom{position:fixed;left:0;right:0;bottom:0;background:#fff;border-top:1px solid #eee;display:flex;justify-content:space-around;padding:8px 0}
+  footer.bottom a{display:flex;flex-direction:column;align-items:center;font-size:12px;color:#666;text-decoration:none}
+  .muted{color:var(--muted)}
+  .prod{display:flex;gap:18px;flex-wrap:wrap}
+  .prod-left img{width:100%;max-width:420px;border-radius:12px}
+  .prod-right{flex:1;min-width:240px}
+  .qty{width:70px;padding:6px;border-radius:8px;border:1px solid #eee}
+  /* cart modal */
+  #cartModal{position:fixed;inset:0;background:rgba(0,0,0,0.45);display:none;align-items:center;justify-content:center;z-index:120}
+  #cartBox{background:#fff;padding:16px;border-radius:12px;width:92%;max-width:520px;max-height:80vh;overflow:auto}
+  .cart-row{display:flex;gap:12px;align-items:center;padding:8px 0;border-bottom:1px solid #f0f0f0}
+  .cart-row img{width:80px;height:70px;object-fit:cover;border-radius:8px}
+  .cart-actions{display:flex;gap:8px;justify-content:flex-end;margin-top:10px}
+  /* CEO section */
+  .ceo{display:flex;gap:16px;align-items:center;background:#fff;padding:12px;border-radius:12px;margin:14px 0;box-shadow:0 1px 2px rgba(0,0,0,0.05)}
+  .ceo img{width:120px;height:120px;border-radius:50%;object-fit:cover;border:3px solid var(--primary)}
+  .ceo-info h3{margin:0;color:var(--primary)}
+  .ceo-info p{margin:4px 0;color:var(--muted)}
+  .socials a{margin-right:8px;color:var(--primary);text-decoration:none;font-size:18px}
+  /* cookie */
+  #cookieBanner{position:fixed;bottom:0;left:0;right:0;background:#fff;padding:12px 16px;border-top:2px solid var(--primary);display:flex;justify-content:space-between;align-items:center;z-index:200}
+  #cookieBanner button{background:var(--primary);color:#fff;border:0;padding:6px 12px;border-radius:8px;cursor:pointer}
+  /* responsive */
+  @media (max-width:720px){
+    .grid{grid-template-columns:repeat(2,1fr)}
+    main{padding:10px 10px 72px}
+  }
+  @media (min-width:721px){
+    footer.bottom{display:none}
+    main{padding-bottom:30px}
+  }
+</style>
 </head>
 <body>
+<div class="app">
+
   <!-- HEADER -->
-  <header class="header">
-    <div class="logo">
-      <img src="images/logo.png" alt="Stephy Mystique Logo" />
-      <h1>Stephy Mystique</h1>
+  <header>
+    <div style="display:flex;align-items:center;gap:12px">
+      <img src="images/logo.png" alt="Stephy Mystique" style="height:50px;cursor:pointer" onclick="showView('home')">
+      <div style="font-size:0.9rem;color:#fff;opacity:0.95">Your Beauty & Lifestyle Store</div>
     </div>
-
-    <nav class="nav-links">
-      <a href="#">Home</a>
-      <a href="#">Shop</a>
-      <a href="#">Contact</a>
-    </nav>
-
-    <div class="header-search">
-      <input type="text" id="searchInput" placeholder="Search products..." />
-      <button id="searchBtn">Search</button>
+    <div style="display:flex;flex:1;justify-content:flex-end;align-items:center;gap:12px;margin-left:12px">
+      <div class="search" style="flex:1;max-width:700px">
+        <input id="searchInput" placeholder="Search products..." aria-label="Search products">
+        <button id="searchBtn" title="Search"><i class="fa fa-magnifying-glass"></i></button>
+      </div>
+      <div class="icons">
+        <a href="javascript:;" onclick="openCart()" aria-label="View cart">
+          <i class="fa fa-shopping-cart fa-lg"></i>
+          <span id="cartCount" class="badge">0</span>
+        </a>
+        <a href="javascript:;" onclick="showView('account')" aria-label="Account"><i class="fa fa-user fa-lg" style="color:#fff"></i></a>
+      </div>
     </div>
-
-    <!-- ANIMATED WHITE CART ICON -->
-    <button id="cart-button" class="cart"> 🛒 <span class="cart-count">0</span></button>
   </header>
 
-  <!-- WELCOME BANNER -->
-  <section class="welcome-banner">
-    💋 Welcome to Stephy Mystique — Shop Our Beauty Essentials!
-  </section>
+  <!-- NAVIGATION -->
+  <nav id="catBar">
+    <button class="active" onclick="filterCategory(null)">All</button>
+    <button onclick="filterCategory('Beauty')">Beauty</button>
+    <button onclick="filterCategory('Accessories')">Accessories</button>
+    <button onclick="filterCategory('Health')">Health</button>
+    <button onclick="filterCategory('Fashion')">Fashion</button>
+  </nav>
 
-  <!-- HERO -->
-  <section class="hero">
-    <h2>Discover Trendy Fashion &amp; Beauty Finds</h2>
-    <p>Shop the latest styles, accessories &amp; glam essentials — all in one place!</p>
-  </section>
+  <!-- MAIN -->
+  <main id="main">
+   <section class="hero" style="margin-bottom:12px; justify-content: center; text-align: center;">
+  <div>
+    <h1 style="margin:0">Welcome to Stephy Mystique</h1>
+    <p class="muted">Shop our curated beauty and lifestyle picks — tap Add to Cart to try it out.</p>
+  </div>
+  <img src="images/logo.png" alt="Stephy Mystique Logo" style="max-width:200px; margin-top:12px;">
+</section>
 
-  <!-- PRODUCT GRID -->
-  <section class="products">
-    <!-- 20 products -->
-    <div class="product"><img src="images/product1.jpg" alt=""><h3>Lip Gloss</h3><p>₵25</p><button>Add to Cart</button></div>
-    <div class="product"><img src="images/product2.jpg" alt=""><h3>Lip Mask</h3><p>₵10</p><button>Add to Cart</button></div>
-    <div class="product"><img src="images/product3.jpg" alt=""><h3>WNP Nourishing Lip balm</h3><p>₵16</p><button>Add to Cart</button></div>
-    <div class="product"><img src="images/product4.jpg" alt=""><h3>Lip Oil</h3><p>₵25</p><button>Add to Cart</button></div>
-    <div class="product"><img src="images/product5.jpg" alt=""><h3>Petal Soap</h3><p>₵10</p><button>Add to Cart</button></div>
-    <div class="product"><img src="images/product6.jpg" alt=""><h3>Kiss Beauty Coffee Lip Scrub</h3><p>₵25</p><button>Add to Cart</button></div>
-    <div class="product"><img src="images/product7.jpg" alt=""><h3>Romantic Rain Lip Gloss</h3><p>₵25</p><button>Add to Cart</button></div>
-    <div class="product"><img src="images/product8.jpg" alt=""><h3> Double sided Face Brush</h3><p>₵35</p><button>Add to Cart</button></div>
-    <div class="product"><img src="images/product9.jpg" alt=""><h3>Classic Lip Balm</h3><p>₵15</p><button>Add to Cart</button></div>
-    <div class="product"><img src="images/product10.jpg" alt=""><h3>Vaseline Lip therapy</h3><p>₵16</p><button>Add to Cart</button></div>
-    <div class="product"><img src="images/product11.jpg" alt=""><h3>Fruit Lip oil</h3><p>₵22</p><button>Add to Cart</button></div>
-    <div class="product"><img src="images/product12.jpg" alt=""><h3>24k pure pink perfume</h3><p>₵100</p><button>Add to Cart</button></div>
-    <div class="product"><img src="images/product13.jpg" alt=""><h3>Rk pink lips cream</h3><p>₵60</p><button>Add to Cart</button></div>
-    <div class="product"><img src="images/product14.jpg" alt=""><h3> clear lip gloss</h3><p>₵16</p><button>Add to Cart</button></div>
-    <div class="product"><img src="images/product15.jpg" alt=""><h3> Normal Lip gloss</h3><p>₵10</p><button>Add to Cart</button></div>
-    <div class="product"><img src="images/product16.jpg" alt=""><h3>face mask</h3><p>₵10</p><button>Add to Cart</button></div>
-    <div class="product"><img src="images/product17.jpg" alt=""><h3>Necklace </h3><p>₵20</p><button>Add to Cart</button></div>
-    <div class="product"><img src="images/product18.jpg" alt=""><h3>Hand Cream</h3><p>₵10</p><button>Add to Cart</button></div>
-    <div class="product"><img src="images/product19.jpg" alt=""><h3>Tongue Scrapper </h3><p>₵20</p><button>Add to Cart</button></div>
-    <div class="product"><img src="images/product20.jpg" alt=""><h3>Eyebrow and facial razior</h3><p>₵10</p><button>Add to Cart</button></div>
-  </section>
+    <!-- CEO SECTION -->
+    <section class="ceo">
+      <img src="images/ceo.jpg" alt="CEO Ileona Aniagyei">
+      <div class="ceo-info">
+        <h3>Stephanie Aniagyei</h3>
+        <p>Founder & CEO, Stephy Mystique</p>
+        <div class="socials">
+          <a href="https://x.com/stephyhaizel?t=uU7u6bKVsdcZ" target="_blank"><i class="fab fa-x-twitter"></i></a>
+          <a href="https://www.instagram.com/adjowa_serwaa_akoto?igsh=MWFycTd4NWl2N3Fu" target="_blank"><i class="fab fa-instagram"></i></a><a href="https://chat.whatsapp.com/FylrHzjqDBDJt9XooLbbyI?mode=wwt" target="_blank" aria-label="Join our WhatsApp Group">
+  <i class="fa-brands fa-whatsapp fa-lg" style="color:#25D366"></i> Join our WhatsApp Group
+</a> 
+        </div>
+      </div>
+    </section>
 
-  <!-- CART POPUP -->
-  <div id="cartPopup" class="cart-popup">
-    <h3>Your Cart</h3>
+    <!-- PRODUCTS GRID -->
+    <section>
+      <h2 style="margin:6px 0">Products</h2>
+      <div id="productsGrid" class="grid"></div>
+    </section>
+  </main>
+
+  <!-- FOOTER -->
+  <footer class="bottom">
+    <a href="javascript:;" onclick="showView('home')"><i class="fa fa-house"></i><span>Home</span></a>
+    <a href="javascript:;" onclick="showView('products')"><i class="fa fa-list"></i><span>Shop</span></a>
+    <a href="javascript:;" onclick="openCart()"><i class="fa fa-cart-shopping"></i><span>Cart</span></a>
+    <a href="javascript:;" onclick="showView('account')"><i class="fa fa-user"></i><span>Account</span></a>
+  </footer>
+</div>
+
+<!-- CART MODAL -->
+<div id="cartModal" role="dialog" aria-modal="true" aria-labelledby="cartTitle">
+  <div id="cartBox">
+    <h2 id="cartTitle" style="margin-top:0;color:var(--primary)">Your Cart</h2>
     <div id="cartItems"></div>
-    <p>Total: ₵<span id="cartTotal">0.00</span></p>
 
-    <!-- DELIVERY DETAILS -->
-    <div id="deliveryDetails" style="margin-top:10px;">
-      <h4>Delivery Details</h4>
-      <input type="text" id="customerName" placeholder="Full Name" style="width:100%; margin-bottom:5px;" />
-      <input type="text" id="customerPhone" placeholder="Phone Number" style="width:100%; margin-bottom:5px;" />
-      <textarea id="customerAddress" placeholder="Delivery Address" style="width:100%; margin-bottom:5px;"></textarea>
-    </div>
+    <!-- cartSummary will be filled dynamically and includes delivery fields -->
+    <div id="cartSummary" style="margin-top:12px"></div>
 
-    <button id="checkoutBtn">Checkout</button>
-    <button id="closeCart">Close</button>
-
-    <!-- ORDER SUMMARY -->
-    <div id="orderSummary">
-      <h4>Order Summary</h4>
-      <pre id="orderSummaryText"></pre>
-      <button id="confirmPaymentBtn">OK</button>
+    <div style="display:flex;gap:8px;justify-content:flex-end;margin-top:12px">
+      <button class="btn btn-outline" onclick="closeCart()">Close</button>
+      <button class="btn btn-outline" onclick="clearCart()">Clear Cart</button>
+      <button class="btn btn-primary" onclick="proceedCheckout()">Checkout</button>
     </div>
   </div>
-
-  <footer class="footer">
-    <p>© 2025 Stephy Mystique | All Rights Reserved</p>
-    <!-- Social Media Buttons -->
-<div class="social-links">
-  <a href="https://www.tiktok.com/@stephymystique?_t=ZM-90OSSw3Q9uu&_r=1" target="_blank" class="social-btn tiktok">TikTok</a>
-  <a href="https://chat.whatsapp.com/FylrHzjqDBDJt9XooLbbyI" target="_blank" class="social-btn whatsapp">WhatsApp</a>
-  <a href="https://x.com/stephyhaizel?t=uU7u6bKVsdcZb833mKlNBw&s=09" target="_blank" class="social-btn twitter">X</a>
-  <a href="https://www.instagram.com/adjowa_serwaa_akoto?igsh=MWFycTd4NWl2N3Fu" target="_blank" class="social-btn instagram">Instagram</a>
 </div>
 
-<style>
-/* Social Buttons Container */
-.social-links {
-  text-align: center;
-  margin-top: 30px;
-}
-
-/* General Button Styles */
-.social-btn {
-  display: inline-block;
-  margin: 8px;
-  padding: 12px 25px;
-  color: white;
-  font-weight: bold;
-  border-radius: 10px;
-  text-decoration: none;
-  transition: transform 0.3s ease, box-shadow 0.3s ease;
-  box-shadow: 0 4px 12px rgba(0,0,0,0.2);
-  font-family: Arial, sans-serif;
-}
-
-/* Hover Animation */
-.social-btn:hover {
-  transform: scale(1.1);
-  box-shadow: 0 6px 16px rgba(0,0,0,0.3);
-}
-
-/* Platform Colors */
-.tiktok { background: linear-gradient(45deg, #69C9D0, #EE1D52); }
-.whatsapp { background: #25D366; }
-.twitter { background: #1DA1F2; }
-.instagram { background: radial-gradient(circle at 30% 107%, #fdf497 0%, #fd5949 45%, #d6249f 60%, #285AEB 90%); }
-</style>
-
-    <!-- CEO Info Section -->
-<div class="ceo-info">
-  <img src="images/ceo.jpg" alt="Stephanie Aniagyei" class="ceo-img">
-  <h2 class="ceo-name">Stephanie Aniagyei</h2>
-  <p class="ceo-contact">✉️ Stephymystique@gmail.com | 📞 0553314773</p>
+<!-- COOKIE BANNER -->
+<div id="cookieBanner">
+  <span>We use cookies to enhance your experience. By continuing, you agree to our use of cookies.</span>
+  <button onclick="acceptCookies()">Accept</button>
 </div>
-
-<style>
-/* CEO Section Styling */
-.ceo-info {
-  text-align: center;
-  background: linear-gradient(135deg, #ff9a9e, #fad0c4, #fbc2eb);
-  padding: 30px 20px;
-  border-radius: 20px;
-  color: white;
-  max-width: 450px;
-  margin: 40px auto;
-  box-shadow: 0 8px 20px rgba(0,0,0,0.2);
-  animation: fadeInUp 1.5s ease forwards;
-}
-
-/* CEO Image */
-.ceo-img {
-  width: 120px;
-  height: 120px;
-  object-fit: cover;
-  border-radius: 50%;
-  border: 4px solid white;
-  margin-bottom: 15px;
-  animation: fadeIn 2s ease forwards;
-}
-
-/* Name animation */
-.ceo-name {
-  font-size: 28px;
-  font-weight: bold;
-  margin-bottom: 10px;
-  background: linear-gradient(90deg, #fff, #ffd700);
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
-  animation: shine 2s infinite;
-}
-
-/* Contact animation */
-.ceo-contact {
-  font-size: 18px;
-  animation: pulse 2s infinite;
-}
-
-/* Animations */
-@keyframes fadeInUp {
-  0% {opacity: 0; transform: translateY(50px);}
-  100% {opacity: 1; transform: translateY(0);}
-}
-
-@keyframes fadeIn {
-  0% {opacity: 0;}
-  100% {opacity: 1;}
-}
-
-@keyframes shine {
-  0% {background-position: -200%;}
-  100% {background-position: 200%;}
-}
-
-@keyframes pulse {
-  0%, 100% {opacity: 1;}
-  50% {opacity: 0.6;}
-}
-</style>
-
-   
-
- 
-</style>
-<!-- Cookie Consent Banner -->
-<div id="cookie-banner">
-  <p>🍭 We use cookies to enhance your experience on <strong>Stephymystique</strong>.  
-    <button id="accept-cookies">Accept</button>
-    <button id="decline-cookies">Decline</button>
-  </p>
-</div>
-
-<style>
-/* Banner styling */
-#cookie-banner {
-  position: fixed;
-  bottom: -120px; /* hidden initially */
-  left: 50%;
-  transform: translateX(-50%);
-  background: linear-gradient(135deg, #ff9a9e, #fad0c4, #fbc2eb);
-  color: white;
-  padding: 15px 25px;
-  border-radius: 15px 15px 0 0;
-  box-shadow: 0 -6px 20px rgba(0,0,0,0.3);
-  font-family: 'Arial', sans-serif;
-  font-size: 16px;
-  display: flex;
-  flex-wrap: wrap;
-  align-items: center;
-  justify-content: center;
-  gap: 12px;
-  transition: bottom 0.6s ease;
-  z-index: 9999;
-  text-align: center;
-}
-
-/* Buttons styling */
-#cookie-banner button {
-  padding: 8px 18px;
-  border: none;
-  border-radius: 8px;
-  cursor: pointer;
-  font-weight: bold;
-  transition: 0.3s ease;
-  font-family: inherit;
-}
-
-#accept-cookies { 
-  background: #25D366; 
-  color: white; 
-}
-#decline-cookies { 
-  background: #f44336; 
-  color: white; 
-}
-
-#cookie-banner button:hover {
-  transform: scale(1.1);
-}
-
-/* Bounce animation on text to attract attention */
-@keyframes bounce {
-  0%, 100% { transform: translateY(0); }
-  50% { transform: translateY(-6px); }
-}
-#cookie-banner p {
-  animation: bounce 3s infinite;
-}
-</style>
 
 <script>
-// Show banner after 1 second
-window.addEventListener('load', () => {
-  const banner = document.getElementById('cookie-banner');
+/* ---------- Cookie ---------- */
+function acceptCookies(){ document.getElementById('cookieBanner').style.display='none'; localStorage.setItem('sm_cookies','accepted'); }
+if(localStorage.getItem('sm_cookies')==='accepted') document.getElementById('cookieBanner').style.display='none';
 
-  // Only show if not already accepted/declined
-  if (!localStorage.getItem('cookiesAccepted')) {
-    setTimeout(() => {
-      banner.style.bottom = '20px';
-    }, 1000);
+/* ---------- Product Data (unchanged) ---------- */
+const productList = [
+  {id:'p1', image:'images/product1.jpg', title:'Lip Gloss', price:25, category:'Beauty'},
+  {id:'p2', image:'images/product2.jpg', title:'Lip Mask', price:10, category:'Beauty'},
+  {id:'p3', image:'images/product3.jpg', title:'WNP Nourishing Lip balm', price:16, category:'Beauty'},
+  {id:'p4', image:'images/product4.jpg', title:'Lip Oil', price:25, category:'Beauty'},
+  {id:'p5', image:'images/product5.jpg', title:'Petal Soap', price:10, category:'Beauty'},
+  {id:'p6', image:'images/product6.jpg', title:'Kiss Beauty Coffee Lip Scrub', price:15, category:'Beauty'},
+  {id:'p7', image:'images/product7.jpg', title:'Romantic Rain Fat Lip Oil', price:25, category:'Beauty'},
+  {id:'p8', image:'images/product8.jpg', title:'Double sided Face Brush', price:35, category:'Accessories'},
+  {id:'p9', image:'images/product9.jpg', title:'Classic Lip Balm', price:20, category:'Beauty'},
+  {id:'p10', image:'images/product10.jpg', title:'Vaseline Lip therapy', price:16, category:'Beauty'},
+  {id:'p11', image:'images/product11.jpg', title:'Two in one Lip oil', price:15, category:'Beauty'},
+  {id:'p12', image:'images/product12.jpg', title:'24k pure pink perfume', price:100, category:'Beauty'},
+  {id:'p13', image:'images/product13.jpg', title:'Rk pink lips cream', price:60, category:'Beauty'},
+  {id:'p14', image:'images/product14.jpg', title:'clear lip gloss', price:16, category:'Beauty'},
+  {id:'p15', image:'images/product15.jpg', title:'Normal Lip gloss', price:10, category:'Beauty'},
+  {id:'p16', image:'images/product16.jpg', title:'face mask', price:10, category:'Beauty'},
+  {id:'p17', image:'images/product17.jpg', title:'Necklace', price:20, category:'Accessories'},
+  {id:'p18', image:'images/product18.jpg', title:'Hand Cream', price:10, category:'Beauty'},
+  {id:'p19', image:'images/product19.jpg', title:'Tongue Scrapper', price:20, category:'Health'},
+  {id:'p20', image:'images/product20.jpg', title:'Eyebrow and facial razior', price:10, category:'Accessories'}
+];
+
+/* ---------- Cart using localStorage ---------- */
+const CART_KEY = 'sm_cart_v2';
+function getCart(){ try{ return JSON.parse(localStorage.getItem(CART_KEY)) || {}; } catch(e){ return {}; } }
+function saveCart(cart){ localStorage.setItem(CART_KEY, JSON.stringify(cart)); renderCartCount(); }
+function addToCart(id, qty=1){
+  const cart = getCart();
+  cart[id] = (cart[id]||0) + qty;
+  saveCart(cart);
+  showToast('Added to cart');
+  renderCartItems(); // refresh items immediately
+}
+function updateQty(id, qty){ const cart = getCart(); if(qty<=0) delete cart[id]; else cart[id]=qty; saveCart(cart); renderCartItems(); }
+function removeItem(id){ const cart = getCart(); delete cart[id]; saveCart(cart); renderCartItems(); }
+function clearCart(){ if(!confirm('Clear all items from cart?')) return; localStorage.removeItem(CART_KEY); renderCartItems(); renderCartCount(); }
+
+/* ---------- Render product grid ---------- */
+const grid = document.getElementById('productsGrid');
+function renderProducts(list = productList){
+  grid.innerHTML = '';
+  list.forEach(p=>{
+    const div = document.createElement('div');
+    div.className = 'product';
+    div.innerHTML = `
+      <div class="img"><img src="${p.image}" alt="${escapeHtml(p.title)}" onerror="this.src='https://via.placeholder.com/400x300?text=No+Image'"></div>
+      <h3>${escapeHtml(p.title)}</h3>
+      <p class="price">₵${p.price.toFixed(2)}</p>
+      <div class="actions">
+        <button class="btn btn-outline" onclick="viewProduct('${p.id}')">View</button>
+        <button class="btn btn-primary" onclick="addToCart('${p.id}',1)">Add to Cart</button>
+      </div>
+    `;
+    grid.appendChild(div);
+  });
+}
+renderProducts();
+
+/* ---------- Filter / search ---------- */
+function filterCategory(cat){
+  document.querySelectorAll('#catBar button').forEach(b=>b.classList.remove('active'));
+  const btns = Array.from(document.querySelectorAll('#catBar button'));
+  const match = btns.find(b => b.textContent === (cat || 'All'));
+  if(match) match.classList.add('active');
+  if(!cat){ renderProducts(); return; }
+  const filtered = productList.filter(p=>p.category === cat);
+  renderProducts(filtered);
+}
+document.getElementById('searchBtn').addEventListener('click', ()=> {
+  const q = document.getElementById('searchInput').value.trim().toLowerCase();
+  if(!q){ renderProducts(); return; }
+  const results = productList.filter(p=> p.title.toLowerCase().includes(q) || (p.category||'').toLowerCase().includes(q));
+  renderProducts(results);
+});
+document.getElementById('searchInput').addEventListener('keydown', (e)=>{ if(e.key==='Enter') document.getElementById('searchBtn').click(); });
+
+/* ---------- Cart UI ---------- */
+function renderCartCount(){
+  const cart = getCart();
+  const count = Object.values(cart).reduce((s,v)=>s+v,0);
+  document.getElementById('cartCount').textContent = count;
+}
+function openCart(){
+  renderCartItems();
+  document.getElementById('cartModal').style.display='flex';
+}
+function closeCart(){ document.getElementById('cartModal').style.display='none'; }
+
+function renderCartItems(){
+  const container = document.getElementById('cartItems');
+  const summary = document.getElementById('cartSummary');
+  const cart = getCart();
+  const ids = Object.keys(cart);
+  container.innerHTML='';
+  if(ids.length===0){
+    container.innerHTML='<p class="muted">Your cart is empty.</p>';
+    // clear summary too
+    summary.innerHTML = '';
+    renderCartCount();
+    return;
   }
 
-  // Accept cookies
-  document.getElementById('accept-cookies').addEventListener('click', () => {
-    localStorage.setItem('cookiesAccepted', 'true');
-    banner.style.bottom = '-120px';
+  let subtotal=0;
+  ids.forEach(id=>{
+    const qty=cart[id];
+    const p=productList.find(x=>x.id===id);
+    if(!p) return;
+    const row=document.createElement('div');
+    row.className='cart-row';
+    row.innerHTML=`
+      <img src="${p.image}" alt="${escapeHtml(p.title)}" onerror="this.src='https://via.placeholder.com/150?text=No+Image'">
+      <div style="flex:1">
+        <div style="font-weight:700">${escapeHtml(p.title)}</div>
+        <div class="muted">₵${p.price.toFixed(2)} x 
+          <input type="number" min="1" value="${qty}" style="width:70px;padding:6px;border-radius:6px;border:1px solid #eee" onchange="onQtyChange('${id}',this.value)">
+          = ₵<span>${(p.price*qty).toFixed(2)}</span>
+        </div>
+      </div>
+      <div>
+        <button onclick="removeItem('${id}')" title="Remove item">Remove</button>
+      </div>
+    `;
+    container.appendChild(row);
+    subtotal+=p.price*qty;
   });
 
-  // Decline cookies
-  document.getElementById('decline-cookies').addEventListener('click', () => {
-    localStorage.setItem('cookiesAccepted', 'false');
-    banner.style.bottom = '-120px';
+  // Build cart summary + delivery form inside the cart modal
+  summary.innerHTML = `
+    <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:8px;">
+      <div><strong>Subtotal</strong></div>
+      <div><strong>₵${subtotal.toFixed(2)}</strong></div>
+    </div>
+
+    <div id="deliveryDetails" style="margin-top:8px;padding-top:8px;border-top:1px solid #f3f3f3">
+      <h4 style="margin:6px 0 8px 0">Delivery Details</h4>
+      <input type="text" id="customerName" placeholder="Full Name" style="width:100%; margin-bottom:6px; padding:8px; border-radius:6px; border:1px solid #eee;">
+      <input type="text" id="customerPhone" placeholder="Phone Number" style="width:100%; margin-bottom:6px; padding:8px; border-radius:6px; border:1px solid #eee;">
+      <textarea id="customerAddress" placeholder="Delivery Address" style="width:100%; margin-bottom:6px; padding:8px; border-radius:6px; border:1px solid #eee;"></textarea>
+
+      <div style="margin-bottom:8px">
+        <label for="deliveryRegion"><strong>Select Region</strong></label>
+        <select id="deliveryRegion" style="width:100%;padding:8px;margin-top:4px;border-radius:6px;border:1px solid #eee" onchange="updateDeliveryTotal()">
+          <option value="">-- Choose your region --</option>
+          <option value="35">Greater Accra - ₵35</option>
+          <option value="25">Central Region - ₵25</option>
+          <option value="65">Volta Region - ₵65</option>
+          <option value="75">Western Region - ₵75</option>
+        </select>
+      </div>
+
+      <div id="deliveryFeeLine" style="display:flex;justify-content:space-between;align-items:center;margin-top:6px"></div>
+
+      <div id="cartTotals" style="display:flex;flex-direction:column;gap:6px;margin-top:8px">
+        <div style="display:flex;justify-content:space-between;align-items:center">
+          <div>Subtotal</div>
+          <div>₵${subtotal.toFixed(2)}</div>
+        </div>
+        <div style="display:flex;justify-content:space-between;align-items:center">
+          <div>Delivery Fee</div>
+          <div id="deliveryFeeAmount">₵0.00</div>
+        </div>
+        <div style="display:flex;justify-content:flex-end;align-items:center;margin-top:6px;font-size:1.1rem">
+          <strong>Total: ₵<span id="grandTotal">${subtotal.toFixed(2)}</span></strong>
+        </div>
+      </div>
+    </div>
+  `;
+
+  // ensure cart count updated
+  renderCartCount();
+}
+
+// called when qty changes
+function onQtyChange(id,value){ const v=parseInt(value)||1; updateQty(id,v); }
+
+// update delivery fee and grand total when region changes
+function updateDeliveryTotal(){
+  const cart = getCart();
+  let subtotal = 0;
+  Object.keys(cart).forEach(id=>{
+    const p = productList.find(x=>x.id === id);
+    if(p) subtotal += p.price * cart[id];
   });
-});
+  const regionSelect = document.getElementById('deliveryRegion');
+  const deliveryFee = parseFloat(regionSelect?.value || 0);
+  document.getElementById('deliveryFeeAmount').textContent = `₵${deliveryFee.toFixed(2)}`;
+  document.getElementById('grandTotal').textContent = (subtotal + deliveryFee).toFixed(2);
+  const dfLine = document.getElementById('deliveryFeeLine');
+  dfLine.innerHTML = deliveryFee ? `<small style="color:var(--muted)">Delivery to: ${regionSelect.options[regionSelect.selectedIndex].text}</small>` : '';
+}
+
+/* ---------- Checkout with Paystack (validates fields) ---------- */
+function proceedCheckout(){
+  const cart = getCart();
+  if(Object.keys(cart).length === 0){ alert('Your cart is empty'); return; }
+
+  // get delivery fields
+  const name = (document.getElementById('customerName') || {}).value?.trim();
+  const phone = (document.getElementById('customerPhone') || {}).value?.trim();
+  const address = (document.getElementById('customerAddress') || {}).value?.trim();
+  const regionSelect = document.getElementById('deliveryRegion');
+  const deliveryFee = parseFloat(regionSelect?.value || 0);
+
+  if(!name || !phone || !address || !regionSelect || !regionSelect.value){
+    alert('Please fill name, phone, address and select a delivery region before checkout.');
+    return;
+  }
+
+  // compute subtotal
+  let subtotal = 0;
+  Object.keys(cart).forEach(id=>{
+    const p = productList.find(x=>x.id === id);
+    if(p) subtotal += p.price * cart[id];
+  });
+
+  const total = subtotal + deliveryFee;
+
+  // prepare order description for metadata
+  const orderDescription = Object.keys(cart).map(id=>{
+    const p = productList.find(x=>x.id===id);
+    return `${p.title} x${cart[id]}`;
+  }).join(', ');
+
+  // Paystack integration
+  const handler = PaystackPop.setup({
+    key: 'pk_live_640af38072f48339462a8937bed12dda2774a34d', // your live key
+    email: `${phone}@example.com`,
+    amount: total * 100, // in pesewas
+    currency: 'GHS',
+    ref: 'STPH-' + Math.floor(Math.random() * 1000000000 + 1),
+    metadata: {
+      custom_fields: [
+        { display_name: "Customer Name", variable_name: "customer_name", value: name },
+        { display_name: "Phone Number", variable_name: "phone_number", value: phone },
+        { display_name: "Delivery Address", variable_name: "delivery_address", value: `${address}, ${regionSelect.options[regionSelect.selectedIndex].text}` },
+        { display_name: "Order Details", variable_name: "order_details", value: orderDescription },
+        { display_name: "Delivery Fee", variable_name: "delivery_fee", value: `₵${deliveryFee.toFixed(2)}` }
+      ]
+    },
+    label: `₵${total.toFixed(2)} Total (incl. Delivery)`,
+    callback: function(response){
+      alert('Payment successful! Reference: '+response.reference + '\nThank you — we will process your order.');
+      // clear cart and refresh UI
+      localStorage.removeItem(CART_KEY);
+      renderCartCount();
+      renderCartItems();
+      closeCart();
+    },
+    onClose: function(){
+      alert('Payment window closed.');
+    }
+  });
+
+  handler.openIframe();
+}
+
+/* ---------- Product view ---------- */
+function viewProduct(id){
+  const p = productList.find(x=>x.id===id);
+  if(!p) return alert('Product not found');
+  const box = document.getElementById('prodDetail') || document.createElement('div');
+  if(!box.id) box.id='prodDetail';
+  box.innerHTML=`
+    <div class="prod">
+      <div class="prod-left"><img src="${p.image}" alt="${escapeHtml(p.title)}" onerror="this.src='https://via.placeholder.com/600x400?text=No+Image'"></div>
+      <div class="prod-right">
+        <h2 style="margin:0">${escapeHtml(p.title)}</h2>
+        <div class="muted" style="margin-top:6px">${escapeHtml(p.category)}</div>
+        <div style="color:var(--primary);font-weight:800;margin-top:8px">₵${p.price.toFixed(2)}</div>
+        <p style="margin-top:8px" class="muted">Demo description —  Availabe.</p>
+        <div style="display:flex;gap:8px;align-items:center;margin-top:12px">
+          <label>Qty <input id="prodQty" type="number" min="1" value="1" class="qty"></label>
+          <button class="btn btn-primary" onclick="(function(){ addToCart('${p.id}',parseInt(document.getElementById('prodQty').value)||1 ); showToast('Added to cart'); })()">Add to cart</button>
+          <button class="btn btn-outline" onclick="closeProd()">Close</button>
+        </div>
+      </div>
+    </div>
+  `;
+  document.getElementById('prodModal').style.display='flex';
+}
+function closeProd(){ document.getElementById('prodModal').style.display='none'; }
+
+/* ---------- Account / Login ---------- */
+function showView(which){
+  if(which==='account'){
+    const name = localStorage.getItem('sm_user_name');
+    if(name){
+      const ok = confirm('You are logged in as '+name+'. Click OK to logout, Cancel to stay.');
+      if(ok){ localStorage.removeItem('sm_user_name'); alert('Logged out'); }
+    } else {
+      const nm = prompt('Enter your name to login (demo):');
+      if(nm){ localStorage.setItem('sm_user_name', nm); alert('Logged in as '+nm); }
+    }
+  } else if(which==='home'){ window.scrollTo({top:0,behavior:'smooth'}); }
+  else if(which==='products'){ window.scrollTo({top: document.querySelector('main').offsetTop, behavior:'smooth'}); }
+}
+
+/* ---------- Toast ---------- */
+let toastTimer = null;
+function showToast(msg){
+  const t=document.createElement('div');
+  t.textContent=msg;
+  t.style.position='fixed';
+  t.style.bottom='100px';
+  t.style.left='50%';
+  t.style.transform='translateX(-50%)';
+  t.style.background='rgba(0,0,0,0.8)';
+  t.style.color='#fff';
+  t.style.padding='8px 12px';
+  t.style.borderRadius='8px';
+  t.style.zIndex=200;
+  document.body.appendChild(t);
+  if(toastTimer) clearTimeout(toastTimer);
+  toastTimer=setTimeout(()=>{ t.remove(); },1500);
+}
+
+/* ---------- Utilities ---------- */
+function escapeHtml(s){ return String(s).replace(/[&<>"']/g, c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c])); }
+
+/* ---------- Init ---------- */
+renderCartCount();
+renderProducts();
 </script>
 
-  </footer>
+<!-- Product Modal -->
+<div id="prodModal" style="display:none;position:fixed;inset:0;background:rgba(0,0,0,0.45);align-items:center;justify-content:center;z-index:110">
+  <div style="background:#fff;padding:14px;border-radius:12px;width:92%;max-width:720px;max-height:90vh;overflow:auto">
+    <button style="float:right;background:none;border:none;font-size:18px;cursor:pointer" onclick="closeProd()">✕</button>
+    <div id="prodDetail"></div>
+  </div>
+</div>
 
-  <!-- PAYSTACK JS -->
-  <script src="https://js.paystack.co/v1/inline.js"></script>
-  <script src="script.js"></script>
+<!-- Paystack script -->
+<script src="https://js.paystack.co/v1/inline.js"></script>
 </body>
 </html>
-
-
-
-
-
