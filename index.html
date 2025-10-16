@@ -462,7 +462,7 @@ function viewProduct(id){
         <h2 style="margin:0">${escapeHtml(p.title)}</h2>
         <div class="muted" style="margin-top:6px">${escapeHtml(p.category)}</div>
         <div style="color:var(--primary);font-weight:800;margin-top:8px">₵${p.price.toFixed(2)}</div>
-        <p style="margin-top:8px" class="muted">Demo description — replace with your detailed product description later.</p>
+        <p style="margin-top:8px" class="muted">Demo description — products are exactly what you see.</p>
         <div style="display:flex;gap:8px;align-items:center;margin-top:12px">
           <label>Qty <input id="prodQty" type="number" min="1" value="1" class="qty"></label>
           <button class="btn btn-primary" onclick="(function(){ addToCart('${p.id}',parseInt(document.getElementById('prodQty').value)||1 ); showToast('Added to cart'); })()">Add to cart</button>
@@ -535,6 +535,7 @@ renderCartItems();
 </footer> 
 </body>
 </html>
+
 
 
 
