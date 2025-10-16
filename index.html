@@ -49,22 +49,19 @@
   .prod-left img{width:100%;max-width:420px;border-radius:12px}
   .prod-right{flex:1;min-width:240px}
   .qty{width:70px;padding:6px;border-radius:8px;border:1px solid #eee}
-  /* cart modal */
   #cartModal{position:fixed;inset:0;background:rgba(0,0,0,0.45);display:none;align-items:center;justify-content:center;z-index:120}
-  #cartBox{background:#fff;padding:16px;border-radius:12px;width:92%;max-width:520px;max-height:80vh;overflow:auto}
+  #cartBox{background:#fff;padding:16px;border-radius:12px;width:92%;max-width:560px;max-height:80vh;overflow:auto}
   .cart-row{display:flex;gap:12px;align-items:center;padding:8px 0;border-bottom:1px solid #f0f0f0}
   .cart-row img{width:80px;height:70px;object-fit:cover;border-radius:8px}
   .cart-actions{display:flex;gap:8px;justify-content:flex-end;margin-top:10px}
-  /* CEO section */
   .ceo{display:flex;gap:16px;align-items:center;background:#fff;padding:12px;border-radius:12px;margin:14px 0;box-shadow:0 1px 2px rgba(0,0,0,0.05)}
   .ceo img{width:120px;height:120px;border-radius:50%;object-fit:cover;border:3px solid var(--primary)}
   .ceo-info h3{margin:0;color:var(--primary)}
   .ceo-info p{margin:4px 0;color:var(--muted)}
   .socials a{margin-right:8px;color:var(--primary);text-decoration:none;font-size:18px}
-  /* cookie */
   #cookieBanner{position:fixed;bottom:0;left:0;right:0;background:#fff;padding:12px 16px;border-top:2px solid var(--primary);display:flex;justify-content:space-between;align-items:center;z-index:200}
   #cookieBanner button{background:var(--primary);color:#fff;border:0;padding:6px 12px;border-radius:8px;cursor:pointer}
-  /* responsive */
+  .summary-row{display:flex;justify-content:space-between;padding:6px 0}
   @media (max-width:720px){
     .grid{grid-template-columns:repeat(2,1fr)}
     main{padding:10px 10px 72px}
@@ -89,12 +86,16 @@
         <input id="searchInput" placeholder="Search products..." aria-label="Search products">
         <button id="searchBtn" title="Search"><i class="fa fa-magnifying-glass"></i></button>
       </div>
-      <div class="icons">
-        <a href="javascript:;" onclick="openCart()" aria-label="View cart">
-          <i class="fa fa-shopping-cart fa-lg"></i>
-          <span id="cartCount" class="badge">0</span>
-        </a>
-        <a href="javascript:;" onclick="showView('account')" aria-label="Account"><i class="fa fa-user fa-lg" style="color:#fff"></i></a>
+        <div class="icons">
+  <a href="javascript:;" onclick="openCart()" aria-label="View cart">
+    <i class="fa fa-shopping-cart fa-lg"></i>
+    <span id="cartCount" class="badge">0</span>
+  </a>
+  <a href="logout.html" aria-label="Logout">
+    <i class="fa fa-sign-out-alt fa-lg" style="color:#fff"></i>
+  </a>
+</div>
+
       </div>
     </div>
   </header>
@@ -126,9 +127,8 @@
         <p>Founder & CEO, Stephy Mystique</p>
         <div class="socials">
           <a href="https://x.com/stephyhaizel?t=uU7u6bKVsdcZ" target="_blank"><i class="fab fa-x-twitter"></i></a>
-          <a href="https://www.instagram.com/adjowa_serwaa_akoto?igsh=MWFycTd4NWl2N3Fu" target="_blank"><i class="fab fa-instagram"></i></a><a href="https://chat.whatsapp.com/FylrHzjqDBDJt9XooLbbyI?mode=wwt" target="_blank" aria-label="Join our WhatsApp Group">
-  <i class="fa-brands fa-whatsapp fa-lg" style="color:#25D366"></i> Join our WhatsApp Group
-</a> 
+          <a href="https://www.instagram.com/adjowa_serwaa_akoto?igsh=MWFycTd4NWl2N3Fu" target="_blank"><i class="fab fa-instagram"></i></a>
+          <a href="https://chat.whatsapp.com/FylrHzjqDBDJt9XooLbbyI?mode=wwt" target="_blank" aria-label="Join our WhatsApp Group"><i class="fa-brands fa-whatsapp fa-lg" style="color:#25D366"></i></a>
         </div>
       </div>
     </section>
@@ -153,9 +153,21 @@
 <div id="cartModal" role="dialog" aria-modal="true" aria-labelledby="cartTitle">
   <div id="cartBox">
     <h2 id="cartTitle" style="margin-top:0;color:var(--primary)">Your Cart</h2>
+
+    <!-- delivery selection (per-location fees) -->
+    <div style="margin-bottom:8px">
+      <label for="deliverySelect" style="font-weight:700">Delivery Location:</label>
+      <select id="deliverySelect" onchange="renderCartItems()" style="margin-left:8px;padding:6px;border-radius:8px;border:1px solid #eee">
+        <option value="accra">Accra - ₵35.00</option>
+        <option value="kumasi">Kumasi - ₵50.00</option>
+        <option value="cape_coast">Cape Coast - ₵15.00</option>
+        <option value="tamale">Tamale - ₵65.00</option>
+        <option value="other">Volta - ₵55.00</option>
+      </select>
+    </div>
+
     <div id="cartItems"></div>
 
-    <!-- cartSummary will be filled dynamically and includes delivery fields -->
     <div id="cartSummary" style="margin-top:12px"></div>
 
     <div style="display:flex;gap:8px;justify-content:flex-end;margin-top:12px">
@@ -173,36 +185,62 @@
 </div>
 
 <script>
+/* ---------- Config ---------- */
+const TAX_FLAT = 0.69; // ₵0.69 flat tax per order
+const DELIVERY_TEXT = 'Delivery takes 1 week.';
+const ADMIN_EMAIL = 'girlpowerghana@gmail.com'; // merchant notification
+const PAYSTACK_KEY = 'pk_live_640af38072f48339462a8937bed12dda2774a34d'; // kept as in your file
+
+/* ---------- Delivery fees mapping (update as you like) ---------- */
+const DELIVERY_FEES = {
+  accra: {label:'Accra', fee:35},
+  kumasi: {label:'Kumasi', fee:50},
+  cape_coast: {label:'Cape Coast', fee:15},
+  tamale: {label:'Tamale', fee:65},
+  other: {label:'Volta', fee:55}
+};
+
 /* ---------- Cookie ---------- */
 function acceptCookies(){ document.getElementById('cookieBanner').style.display='none'; localStorage.setItem('sm_cookies','accepted'); }
 if(localStorage.getItem('sm_cookies')==='accepted') document.getElementById('cookieBanner').style.display='none';
 
-/* ---------- Product Data (unchanged) ---------- */
+/* ---------- Product Data (31 items) ---------- */
 const productList = [
-  {id:'p1', image:'images/product1.jpg', title:'Salicylic acid acne patch', price:50, category:'Beauty'},
+  {id:'p1', image:'images/product1.jpg', title:'Lip Gloss', price:25, category:'Beauty'},
   {id:'p2', image:'images/product2.jpg', title:'Lip Mask', price:10, category:'Beauty'},
-  {id:'p3', image:'images/product3.jpg', title:'Lip Gloss', price:15, category:'Beauty'},
+  {id:'p3', image:'images/product3.jpg', title:'WNP Nourishing Lip Balm', price:16, category:'Beauty'},
   {id:'p4', image:'images/product4.jpg', title:'Lip Oil', price:25, category:'Beauty'},
   {id:'p5', image:'images/product5.jpg', title:'Petal Soap', price:10, category:'Beauty'},
-  {id:'p6', image:'images/product6.jpg', title:'Kiss Beauty Coffee Lip Scrub', price:15, category:'Beauty'},
-  {id:'p7', image:'images/product7.jpg', title:'Romantic Rain Fat Lip Oil', price:25, category:'Beauty'},
-  {id:'p8', image:'images/product8.jpg', title:'Double sided Face Brush', price:35, category:'Accessories'},
-  {id:'p9', image:'images/product9.jpg', title:'Classic Lip Balm', price:20, category:'Beauty'},
-  {id:'p10', image:'images/product10.jpg', title:'Vaseline Lip therapy', price:16, category:'Beauty'},
-  {id:'p11', image:'images/product11.jpg', title:'Two in one Lip oil', price:15, category:'Beauty'},
-  {id:'p12', image:'images/product12.jpg', title:'24k pure pink perfume', price:100, category:'Beauty'},
-  {id:'p13', image:'images/product13.jpg', title:'Rk pink lips cream', price:60, category:'Beauty'},
-  {id:'p14', image:'images/product14.jpg', title:'clear lip gloss', price:16, category:'Beauty'},
-  {id:'p15', image:'images/product15.jpg', title:'Normal Lip gloss', price:10, category:'Beauty'},
-  {id:'p16', image:'images/product16.jpg', title:'face mask', price:10, category:'Beauty'},
+  {id:'p6', image:'images/product6.jpg', title:'Kiss Beauty Coffee Lip Scrub', price:25, category:'Beauty'},
+  {id:'p7', image:'images/product7.jpg', title:'Romantic Rain Lip Gloss', price:25, category:'Beauty'},
+  {id:'p8', image:'images/product8.jpg', title:'Double Sided Face Brush', price:35, category:'Accessories'},
+  {id:'p9', image:'images/product9.jpg', title:'Classic Lip Balm', price:15, category:'Beauty'},
+  {id:'p10', image:'images/product10.jpg', title:'Vaseline Lip Therapy', price:16, category:'Beauty'},
+  {id:'p11', image:'images/product11.jpg', title:'Fruit Lip Oil', price:22, category:'Beauty'},
+  {id:'p12', image:'images/product12.jpg', title:'24k Pure Pink Perfume', price:100, category:'Beauty'},
+  {id:'p13', image:'images/product13.jpg', title:'RK Pink Lips Cream', price:60, category:'Beauty'},
+  {id:'p14', image:'images/product14.jpg', title:'Clear Lip Gloss', price:16, category:'Beauty'},
+  {id:'p15', image:'images/product15.jpg', title:'Normal Lip Gloss', price:10, category:'Beauty'},
+  {id:'p16', image:'images/product16.jpg', title:'Face Mask', price:10, category:'Beauty'},
   {id:'p17', image:'images/product17.jpg', title:'Necklace', price:20, category:'Accessories'},
   {id:'p18', image:'images/product18.jpg', title:'Hand Cream', price:10, category:'Beauty'},
-  {id:'p19', image:'images/product19.jpg', title:'Tongue Scrapper', price:20, category:'Health'},
-  {id:'p20', image:'images/product20.jpg', title:'Eyebrow and facial razior', price:10, category:'Accessories'}
+  {id:'p19', image:'images/product19.jpg', title:'Tongue Scraper', price:20, category:'Health'},
+  {id:'p20', image:'images/product20.jpg', title:'Eyebrow & Facial Razor', price:10, category:'Accessories'},
+  {id:'p21', image:'images/product21.jpg', title:'Perfume Oil', price:40, category:'Beauty'},
+  {id:'p22', image:'images/product22.jpg', title:'Body Lotion', price:30, category:'Beauty'},
+  {id:'p23', image:'images/product23.jpg', title:'Face Serum', price:45, category:'Beauty'},
+  {id:'p24', image:'images/product24.jpg', title:'Hair Band Set', price:18, category:'Accessories'},
+  {id:'p25', image:'images/product25.jpg', title:'Nail Polish', price:12, category:'Beauty'},
+  {id:'p26', image:'images/product26.jpg', title:'Makeup Brush Set', price:55, category:'Accessories'},
+  {id:'p27', image:'images/product27.jpg', title:'Detox Face Scrub', price:20, category:'Health'},
+  {id:'p28', image:'images/product28.jpg', title:'Body Mist', price:35, category:'Beauty'},
+  {id:'p29', image:'images/product29.jpg', title:'Charm Bracelet', price:25, category:'Fashion'},
+  {id:'p30', image:'images/product30.jpg', title:'Perfume Combo', price:85, category:'Beauty'},
+  {id:'p31', image:'images/product31.jpg', title:'Satin Bonnet', price:20, category:'Fashion'}
 ];
 
 /* ---------- Cart using localStorage ---------- */
-const CART_KEY = 'sm_cart_v2';
+const CART_KEY = 'sm_cart_v4';
 function getCart(){ try{ return JSON.parse(localStorage.getItem(CART_KEY)) || {}; } catch(e){ return {}; } }
 function saveCart(cart){ localStorage.setItem(CART_KEY, JSON.stringify(cart)); renderCartCount(); }
 function addToCart(id, qty=1){
@@ -210,7 +248,6 @@ function addToCart(id, qty=1){
   cart[id] = (cart[id]||0) + qty;
   saveCart(cart);
   showToast('Added to cart');
-  renderCartItems(); // refresh items immediately
 }
 function updateQty(id, qty){ const cart = getCart(); if(qty<=0) delete cart[id]; else cart[id]=qty; saveCart(cart); renderCartItems(); }
 function removeItem(id){ const cart = getCart(); delete cart[id]; saveCart(cart); renderCartItems(); }
@@ -235,7 +272,6 @@ function renderProducts(list = productList){
     grid.appendChild(div);
   });
 }
-renderProducts();
 
 /* ---------- Filter / search ---------- */
 function filterCategory(cat){
@@ -266,7 +302,6 @@ function openCart(){
   document.getElementById('cartModal').style.display='flex';
 }
 function closeCart(){ document.getElementById('cartModal').style.display='none'; }
-
 function renderCartItems(){
   const container = document.getElementById('cartItems');
   const summary = document.getElementById('cartSummary');
@@ -275,12 +310,10 @@ function renderCartItems(){
   container.innerHTML='';
   if(ids.length===0){
     container.innerHTML='<p class="muted">Your cart is empty.</p>';
-    // clear summary too
-    summary.innerHTML = '';
+    summary.innerHTML='';
     renderCartCount();
     return;
   }
-
   let subtotal=0;
   ids.forEach(id=>{
     const qty=cart[id];
@@ -305,133 +338,114 @@ function renderCartItems(){
     subtotal+=p.price*qty;
   });
 
-  // Build cart summary + delivery form inside the cart modal
+  // delivery selection
+  const deliveryKey = document.getElementById('deliverySelect') ? document.getElementById('deliverySelect').value : 'accra';
+  const deliveryInfo = DELIVERY_FEES[deliveryKey] || {label:'Unknown', fee:0};
+  const deliveryFee = deliveryInfo.fee || 0;
+
+  const tax = TAX_FLAT;
+  const total = subtotal + deliveryFee + tax;
+
   summary.innerHTML = `
-    <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:8px;">
-      <div><strong>Subtotal</strong></div>
-      <div><strong>₵${subtotal.toFixed(2)}</strong></div>
-    </div>
-
-    <div id="deliveryDetails" style="margin-top:8px;padding-top:8px;border-top:1px solid #f3f3f3">
-      <h4 style="margin:6px 0 8px 0">Delivery Details</h4>
-      <input type="text" id="customerName" placeholder="Full Name" style="width:100%; margin-bottom:6px; padding:8px; border-radius:6px; border:1px solid #eee;">
-      <input type="text" id="customerPhone" placeholder="Phone Number" style="width:100%; margin-bottom:6px; padding:8px; border-radius:6px; border:1px solid #eee;">
-      <textarea id="customerAddress" placeholder="Delivery Address" style="width:100%; margin-bottom:6px; padding:8px; border-radius:6px; border:1px solid #eee;"></textarea>
-
-      <div style="margin-bottom:8px">
-        <label for="deliveryRegion"><strong>Select Region</strong></label>
-        <select id="deliveryRegion" style="width:100%;padding:8px;margin-top:4px;border-radius:6px;border:1px solid #eee" onchange="updateDeliveryTotal()">
-          <option value="">-- Choose your region --</option>
-          <option value="35">Greater Accra - ₵35</option>
-          <option value="25">Central Region - ₵25</option>
-          <option value="65">Volta Region - ₵65</option>
-          <option value="75">Western Region - ₵75</option>
-        </select>
-      </div>
-
-      <div id="deliveryFeeLine" style="display:flex;justify-content:space-between;align-items:center;margin-top:6px"></div>
-
-      <div id="cartTotals" style="display:flex;flex-direction:column;gap:6px;margin-top:8px">
-        <div style="display:flex;justify-content:space-between;align-items:center">
-          <div>Subtotal</div>
-          <div>₵${subtotal.toFixed(2)}</div>
-        </div>
-        <div style="display:flex;justify-content:space-between;align-items:center">
-          <div>Delivery Fee</div>
-          <div id="deliveryFeeAmount">₵0.00</div>
-        </div>
-        <div style="display:flex;justify-content:flex-end;align-items:center;margin-top:6px;font-size:1.1rem">
-          <strong>Total: ₵<span id="grandTotal">${subtotal.toFixed(2)}</span></strong>
-        </div>
-      </div>
-    </div>
+    <div class="summary-row"><div>Subtotal</div><div>₵${subtotal.toFixed(2)}</div></div>
+    <div class="summary-row"><div>Delivery (${deliveryInfo.label})</div><div>₵${deliveryFee.toFixed(2)}</div></div>
+    <div class="summary-row"><div>Tax (flat)</div><div>₵${tax.toFixed(2)}</div></div>
+    <div style="border-top:1px solid #eee;margin-top:8px;padding-top:8px;font-weight:700" class="summary-row"><div>Total</div><div>₵${total.toFixed(2)}</div></div>
+    <div style="margin-top:8px;color:var(--muted);font-size:13px">${DELIVERY_TEXT}</div>
   `;
-
-  // ensure cart count updated
   renderCartCount();
 }
-
-// called when qty changes
 function onQtyChange(id,value){ const v=parseInt(value)||1; updateQty(id,v); }
 
-// update delivery fee and grand total when region changes
-function updateDeliveryTotal(){
-  const cart = getCart();
-  let subtotal = 0;
-  Object.keys(cart).forEach(id=>{
-    const p = productList.find(x=>x.id === id);
-    if(p) subtotal += p.price * cart[id];
-  });
-  const regionSelect = document.getElementById('deliveryRegion');
-  const deliveryFee = parseFloat(regionSelect?.value || 0);
-  document.getElementById('deliveryFeeAmount').textContent = `₵${deliveryFee.toFixed(2)}`;
-  document.getElementById('grandTotal').textContent = (subtotal + deliveryFee).toFixed(2);
-  const dfLine = document.getElementById('deliveryFeeLine');
-  dfLine.innerHTML = deliveryFee ? `<small style="color:var(--muted)">Delivery to: ${regionSelect.options[regionSelect.selectedIndex].text}</small>` : '';
-}
-
-/* ---------- Checkout with Paystack (validates fields) ---------- */
+/* ---------- Checkout with Paystack (includes delivery fee, tax, collects email & name, tracking & emails) ---------- */
 function proceedCheckout(){
   const cart = getCart();
-  if(Object.keys(cart).length === 0){ alert('Your cart is empty'); return; }
+  const ids = Object.keys(cart);
+  if(ids.length===0){ alert('Your cart is empty'); return; }
 
-  // get delivery fields
-  const name = (document.getElementById('customerName') || {}).value?.trim();
-  const phone = (document.getElementById('customerPhone') || {}).value?.trim();
-  const address = (document.getElementById('customerAddress') || {}).value?.trim();
-  const regionSelect = document.getElementById('deliveryRegion');
-  const deliveryFee = parseFloat(regionSelect?.value || 0);
+  // collect name & email & delivery address
+  const name = prompt('Enter your full name for the order:');
+  if(!name) return alert('Checkout cancelled');
+  const email = prompt('Enter your email (so we can send your receipt):');
+  if(!email) return alert('Checkout cancelled');
+  const phone = prompt('Enter phone / WhatsApp number for delivery:');
+  if(!phone) return alert('Checkout cancelled');
+  const address = prompt('Enter delivery address (street / landmark):');
+  if(!address) return alert('Checkout cancelled');
 
-  if(!name || !phone || !address || !regionSelect || !regionSelect.value){
-    alert('Please fill name, phone, address and select a delivery region before checkout.');
-    return;
-  }
-
-  // compute subtotal
+  // Calculate subtotal & build items list
   let subtotal = 0;
-  Object.keys(cart).forEach(id=>{
-    const p = productList.find(x=>x.id === id);
-    if(p) subtotal += p.price * cart[id];
+  const items = [];
+  ids.forEach(id=>{
+    const p = productList.find(x=>x.id===id);
+    if(!p) return;
+    const qty = cart[id];
+    subtotal += p.price * qty;
+    items.push({id:p.id, title:p.title, price:p.price, qty});
   });
 
-  const total = subtotal + deliveryFee;
+  // delivery selection
+  const deliveryKey = document.getElementById('deliverySelect') ? document.getElementById('deliverySelect').value : 'accra';
+  const deliveryInfo = DELIVERY_FEES[deliveryKey] || {label:'Unknown', fee:0};
+  const deliveryFee = deliveryInfo.fee || 0;
 
-  // prepare order description for metadata
-  const orderDescription = Object.keys(cart).map(id=>{
-    const p = productList.find(x=>x.id===id);
-    return `${p.title} x${cart[id]}`;
-  }).join(', ');
+  const tax = TAX_FLAT;
+  const total = subtotal + deliveryFee + tax;
 
-  // Paystack integration
+  // generate tracking number (GP-2025-XXXXXX)
+  const tracking = 'GP-2025-' + String(Math.floor(100000 + Math.random()*900000));
+
+  // Prepare metadata for Paystack
+  const metadata = {
+    custom_fields: [
+      {display_name: "Customer Name", variable_name: "customer_name", value: name},
+      {display_name: "Customer Email", variable_name: "customer_email", value: email},
+      {display_name: "Customer Phone", variable_name: "customer_phone", value: phone},
+      {display_name: "Delivery Address", variable_name: "delivery_address", value: address},
+      {display_name: "Delivery Location", variable_name: "delivery_location", value: deliveryInfo.label},
+      {display_name: "Delivery Fee", variable_name: "delivery_fee", value: deliveryFee},
+      {display_name: "Tracking Number", variable_name: "tracking_number", value: tracking},
+      {display_name: "Delivery ETA", variable_name: "delivery_eta", value: "1 week"}
+    ],
+    items: items
+  };
+
+  // Paystack integration (keep your key)
   const handler = PaystackPop.setup({
-    key: 'pk_live_640af38072f48339462a8937bed12dda2774a34d', // your live key
-    email: `${phone}@example.com`,
-    amount: total * 100, // in pesewas
+    key: PAYSTACK_KEY,
+    email: email,
+    amount: Math.round(total * 100), // Paystack expects amount in kobo
     currency: 'GHS',
-    ref: 'STPH-' + Math.floor(Math.random() * 1000000000 + 1),
-    metadata: {
-      custom_fields: [
-        { display_name: "Customer Name", variable_name: "customer_name", value: name },
-        { display_name: "Phone Number", variable_name: "phone_number", value: phone },
-        { display_name: "Delivery Address", variable_name: "delivery_address", value: `${address}, ${regionSelect.options[regionSelect.selectedIndex].text}` },
-        { display_name: "Order Details", variable_name: "order_details", value: orderDescription },
-        { display_name: "Delivery Fee", variable_name: "delivery_fee", value: `₵${deliveryFee.toFixed(2)}` }
-      ]
-    },
-    label: `₵${total.toFixed(2)} Total (incl. Delivery)`,
+    metadata: metadata,
+    ref: ''+Math.floor((Math.random() * 1000000000) + 1),
     callback: function(response){
-      alert('Payment successful! Reference: '+response.reference + '\nThank you — we will process your order.');
-      // clear cart and refresh UI
+      // Payment successful
+      // Clear cart
       localStorage.removeItem(CART_KEY);
       renderCartCount();
       renderCartItems();
       closeCart();
+
+      // Show success + tracking to user
+      const msg = `Payment successful! Reference: ${response.reference}\n\nThank you ${name} — your tracking number is ${tracking}.\n${DELIVERY_TEXT}`;
+      alert(msg);
+
+      // Prepare email text
+      const itemsText = items.map(it => `${it.title} x${it.qty} — ₵${(it.price*it.qty).toFixed(2)}`).join('\n');
+      const fullOrderText = `Order Details:%0D%0A${itemsText}%0D%0A%0D%0ASubtotal: ₵${subtotal.toFixed(2)}%0D%0ADelivery (${deliveryInfo.label}): ₵${deliveryFee.toFixed(2)}%0D%0ATax: ₵${tax.toFixed(2)}%0D%0ATotal: ₵${total.toFixed(2)}%0D%0A%0D%0ATracking Number: ${tracking}%0D%0AReference: ${response.reference}%0D%0ACustomer: ${name}%0D%0AEmail: ${email}%0D%0APhone: ${phone}%0D%0AAddress: ${address}%0D%0A%0D%0A${DELIVERY_TEXT}`;
+
+      // Open mailto for customer (their mail client)
+      const customerSubject = encodeURIComponent(`Stephy Mystique Order Receipt — ${tracking}`);
+      window.location.href = `mailto:${encodeURIComponent(email)}?subject=${customerSubject}&body=${fullOrderText}`;
+
+      // Open merchant email in new tab to notify (merchant can forward or save)
+      const merchantSubject = encodeURIComponent(`New Order: ${tracking} — ${name}`);
+      window.open(`mailto:${ADMIN_EMAIL}?subject=${merchantSubject}&body=${fullOrderText}`, '_blank');
     },
     onClose: function(){
-      alert('Payment window closed.');
+      alert('Payment cancelled.');
     }
   });
-
   handler.openIframe();
 }
 
@@ -448,7 +462,7 @@ function viewProduct(id){
         <h2 style="margin:0">${escapeHtml(p.title)}</h2>
         <div class="muted" style="margin-top:6px">${escapeHtml(p.category)}</div>
         <div style="color:var(--primary);font-weight:800;margin-top:8px">₵${p.price.toFixed(2)}</div>
-        <p style="margin-top:8px" class="muted">Demo description —  Availabe.</p>
+        <p style="margin-top:8px" class="muted">Demo description — replace with your detailed product description later.</p>
         <div style="display:flex;gap:8px;align-items:center;margin-top:12px">
           <label>Qty <input id="prodQty" type="number" min="1" value="1" class="qty"></label>
           <button class="btn btn-primary" onclick="(function(){ addToCart('${p.id}',parseInt(document.getElementById('prodQty').value)||1 ); showToast('Added to cart'); })()">Add to cart</button>
@@ -499,8 +513,9 @@ function showToast(msg){
 function escapeHtml(s){ return String(s).replace(/[&<>"']/g, c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c])); }
 
 /* ---------- Init ---------- */
-renderCartCount();
 renderProducts();
+renderCartCount();
+renderCartItems();
 </script>
 
 <!-- Product Modal -->
@@ -515,5 +530,3 @@ renderProducts();
 <script src="https://js.paystack.co/v1/inline.js"></script>
 </body>
 </html>
-
-
