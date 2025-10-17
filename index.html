@@ -85,29 +85,23 @@
 
 header {
   display: flex;
-  justify-content: space-between;
+  justify-content: space-between; /* logo/search left, icons right */
   align-items: center;
   padding: 0 10px;
 }
 
-.logo {
-  flex-shrink: 0; /* logo stays same size */
-}
-
 .search {
-  flex: 1 1 auto;       /* grow a little, shrink if needed */
-  min-width: 60px;     /* don't shrink too small */
-  max-width: 150px;     /* prevent it from getting too long */
-  margin: 0 10px;       /* spacing from logo and icons */
+  flex: 0 1 auto;       /* takes only needed space */
+  min-width: 60px;      /* can shrink on small screens */
+  max-width: 150px;     /* prevents it from being too long */
+  margin-right: 10px;   /* space between search and icons */
 }
 
 .icons {
-  flex-shrink: 0;       /* cart/logout stay visible */
-  display: flex;        /* if multiple icons, keep them in row */
-  gap: 6px;            /* spacing between cart & logout */
+  flex-shrink: 0;       /* always visible */
+  display: flex;
+  gap: 8px;             /* spacing between cart and logout */
 }
-
-
 
 </style>
 </head>
@@ -573,6 +567,7 @@ renderCartItems();
 </footer> 
 </body>
 </html>
+
 
 
 
