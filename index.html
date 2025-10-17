@@ -82,22 +82,29 @@
   margin: 0 auto;
   padding: 0 8px;
 }
+
 header {
   display: flex;
   justify-content: space-between;
-  align-items: center; /* keeps everything vertically centered */
+  align-items: center;
   padding: 0 10px;
 }
 
+.logo {
+  flex-shrink: 0; /* logo stays same size */
+}
+
 .search {
-  flex-grow: 1;       /* lets it grow a bit */
-  flex-shrink: 1;     /* allows it to shrink if needed */
-  max-width: 500px;   /* prevents it from getting too long */
-  margin: 0 10px;     /* spacing between logo and icons */
+  flex: 1 1 auto;       /* grow a little, shrink if needed */
+  min-width: 100px;     /* don't shrink too small */
+  max-width: 300px;     /* prevent it from getting too long */
+  margin: 0 10px;       /* spacing from logo and icons */
 }
 
 .icons {
-  flex-shrink: 0;     /* prevents icons from shrinking */
+  flex-shrink: 0;       /* cart/logout stay visible */
+  display: flex;        /* if multiple icons, keep them in row */
+  gap: 10px;            /* spacing between cart & logout */
 }
 
 
@@ -567,6 +574,7 @@ renderCartItems();
 </footer> 
 </body>
 </html>
+
 
 
 
