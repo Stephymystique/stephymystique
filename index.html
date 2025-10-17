@@ -84,15 +84,22 @@
 }
 header {
   display: flex;
-  flex-wrap: wrap;       /* allows items to move to next line if needed */
-  justify-content: space-between; /* spreads items across the header */
-  align-items: center;   /* keeps everything vertically aligned */
-  padding: 0 10px;       /* optional: safe padding from edges */
+  justify-content: space-between;
+  align-items: center; /* keeps everything vertically centered */
+  padding: 0 10px;
+}
+
+.search {
+  flex-grow: 1;       /* lets it grow a bit */
+  flex-shrink: 1;     /* allows it to shrink if needed */
+  max-width: 500px;   /* prevents it from getting too long */
+  margin: 0 10px;     /* spacing between logo and icons */
 }
 
 .icons {
-  flex-shrink: 0;        /* prevents icons from being squished */
+  flex-shrink: 0;     /* prevents icons from shrinking */
 }
+
 
 
 </style>
@@ -560,6 +567,7 @@ renderCartItems();
 </footer> 
 </body>
 </html>
+
 
 
 
