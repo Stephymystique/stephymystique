@@ -82,6 +82,17 @@
   margin: 0 auto;
   padding: 0 8px;
 }
+header {
+  display: flex;
+  flex-wrap: wrap;       /* allows items to move to next line if needed */
+  justify-content: space-between; /* spreads items across the header */
+  align-items: center;   /* keeps everything vertically aligned */
+  padding: 0 10px;       /* optional: safe padding from edges */
+}
+
+.icons {
+  flex-shrink: 0;        /* prevents icons from being squished */
+}
 
 
 </style>
@@ -549,6 +560,7 @@ renderCartItems();
 </footer> 
 </body>
 </html>
+
 
 
 
