@@ -143,11 +143,45 @@ header {
 
   <!-- MAIN -->
   <main id="main">
-   <section class="hero" style="margin-bottom:11px; justify-content: center; text-align: center;">
-  <div>
-    <h1 style="margin:0">Welcome to Stephy Mystique</h1>
+   <section class="hero">
+  <div class="hero-content">
+    <h1 class="welcome-text">Welcome to Stephy Mystique</h1>
     <p class="muted"></p>
   </div>
+</section>
+
+<style>
+  /* Center the content */
+  .hero {
+    text-align: center;
+    margin-bottom: 11px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+
+  .hero-content {
+    max-width: 800px; /* Keeps it nicely contained */
+  }
+
+  /* Welcome text styling */
+  .welcome-text {
+    font-family: 'Roboto', 'Helvetica Neue', sans-serif;
+    font-size: 18px;       /* Smallish and readable */
+    font-weight: 400;      /* Professional weight */
+    color: #333;           /* Elegant dark gray */
+    letter-spacing: 0.5px; /* Subtle spacing */
+    margin: 0;             /* Remove extra spacing */
+  }
+
+  /* Optional muted text styling */
+  .muted {
+    color: #666;
+    font-size: 14px;
+    margin-top: 5px;
+  }
+</style>
+
   <img src="images/logo.png" alt="Stephy Mystique Logo" style="max-width:80px; margin-top:2px;">
 </section>
 
@@ -567,6 +601,7 @@ renderCartItems();
 </footer> 
 </body>
 </html>
+
 
 
 
